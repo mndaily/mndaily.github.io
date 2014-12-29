@@ -53,8 +53,9 @@ for course in courses:
 		subjects.append((course['diversified_core'], course['designated_theme'], course['subject']))
 
 	idx3 = get_index_course(bases['children'][idx1]['children'][idx2]['children'], course['subject'])
+	link = "http://onestop2.umn.edu/courseinfo/viewCourseGuideTermAndSubject.do?searchSubject=" + course['subject'] + "#" + course['subject'] + course['catalog_number']
 
-	bases['children'][idx1]['children'][idx2]['children'][idx3]['children'].append({'name': course['title'], 'size': 1})
+	bases['children'][idx1]['children'][idx2]['children'][idx3]['children'].append({'name': course['title'], 'link': link, 'size': 1})
 
 with open('data.json', 'w') as f:
   json.dump(bases, f, ensure_ascii=False)

@@ -4,12 +4,14 @@
 <head>
 <style>
 
-body {
-  background-color: #f7f7f7;
-}
-
 .node {
   cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }
 
 .node text {
@@ -18,7 +20,7 @@ body {
 
 .link {
   fill: none;
-  stroke: #636363;
+  stroke: #ccc;
   stroke-width: 1.5px;
 }
 
@@ -86,13 +88,17 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
       .on("click", click);
 
+  nodeEnter.append("circle")
+      .attr("r", 1e-6)
+      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
   nodeEnter.append("a")
-      .attr('xlink:href', function(d) { return d.children || d._children ? null : "http://www.yahoo.com" })
+      .attr('xlink:href', function(d) { console.log(d); return d.children || d._children ? null : d.link; })
       .attr('target', '_blank')
       .append("text")
-      .attr("x", "3")
+      .attr("x", function(d) { return 10; })
       .attr("dy", ".4em")
-      .attr("text-anchor", "start")
+      .attr("text-anchor", function(d) { return d.children || d._children ? "start" : "start"; })
       .text(function(d) { return d.name; })
       .style("fill-opacity", 1e-6);
 
@@ -100,6 +106,10 @@ function update(source) {
   var nodeUpdate = node.transition()
       .duration(duration)
       .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+  nodeUpdate.select("circle")
+      .attr("r", 4.5)
+      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   nodeUpdate.select("text")
       .style("fill-opacity", 1);
@@ -109,6 +119,10 @@ function update(source) {
       .duration(duration)
       .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
       .remove();
+
+
+  nodeExit.select("circle")
+      .attr("r", 1e-6);
 
   nodeExit.select("text")
       .style("fill-opacity", 1e-6);
@@ -120,7 +134,7 @@ function update(source) {
   // Enter any new links at the parent's previous position.
   link.enter().insert("path", "g")
       .attr("class", "link")
-      .style("stroke-dasharray", ("1, 9"))
+      .style("stroke-dasharray", ("1, 7"))
       .attr("d", function(d) {
         var o = {x: source.x0, y: source.y0};
         return diagonal({source: o, target: o});
