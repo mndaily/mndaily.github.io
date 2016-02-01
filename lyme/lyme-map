@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Lyme Disease in Minnesota Counties</title>
+        <link rel="stylesheet" type="text/css" href="lymestyles.css">
+		<script src="counties2.geojson"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+
+	</head>
+	<body>
+        <div id="container">
+
+				<style>
+				.legend label,
+				.legend span {
+				  display:block;
+				  float:left;
+				  height:15px;
+				  width:20%;
+				  text-align:center;
+				  font-size:9px;
+				  color:#808080;
+				  }
+				</style>
+
+				<!-- Set the display of this container to none so we can
+				     add it programmatically to `legendControl` -->
+				<div id='legend' style='display:none;'>
+				  <span>
+				  	<strong>Lyme Disease in Minnesota</strong>
+				  	<nav class='legend clearfix'>
+					<small>Source: <a href="http://jme.oxfordjournals.org/content/early/2016/01/15/jme.tjv237">Rebecca J. Eisen, Lars Eisen, Charles B. Beard</a></small>
+				    </span>
+				</div>
+	
+            <div id="map" style="border:1px solid black"></div>
+
+		<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+		<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
+
+		<script src="leaflet.ajax.min.js"></script>
+		<script>
+
+		L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+		var map = L.mapbox.map("map", "mapbox.light", {
+			center: [46.15, -94.196],
+            zoom: 6,
+			scrollWheelZoom: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+            zoomControl: false,
+            attributionControl: true,
+            dragging: false,
+            legendControl: {position: 'bottomleft'}
+		});
+		map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+        var geojson;
+
+        geojson = L.geoJson(counties, {
+        	style:
+        	function(feature) {
+        		switch(feature.properties.status){
+        			case "Reported": return {
+        				fillColor:"red",
+        				color:"red",
+        				weight:1};
+     			case "Established": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};
+        		case "Not reported or established": return {
+        				fillColor:"gray",
+        				color:"gray",
+        				weight:1};        				     		
+        			}
+        			},
+        		        	
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+
+      function onEachFeature(feature, layer) {
+          var popupContent = "<p><b>" +
+          feature.properties.name + "</b></p>" + "<p>Status of lyme disease: " + feature.properties.status + "</p>";
+          
+          if (feature.properties) {
+             layer.bindPopup(popupContent);
+          }}
+
+
+		</script>
+
+	</body>
+</html>
