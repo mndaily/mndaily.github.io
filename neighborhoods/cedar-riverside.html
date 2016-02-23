@@ -33,17 +33,20 @@
 
 		  <script src="leaflet.ajax.min.js"></script>
 		  <script>
+	      var southWest = L.latLng(44.958315, -93.266816),
+	            northEast = L.latLng(44.979083, -93.213387),
+	            bounds = L.latLngBounds(southWest, northEast);		  
 		  L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
       		  var map = L.mapbox.map("map", "ethannels.3983d5de", {
-          			center: [44.970351, -93.240366],
-          			zoom: 14,
-          			scrollWheelZoom: false,
-                touchZoom: false,
-                doubleClickZoom: false,
-                zoomControl: false,
-                attributionControl: false,
-                dragging: false
-		  });
+  			center: [44.970351, -93.240366],
+  			zoom: 14,
+  			scrollWheelZoom: false,
+	                touchZoom: false,
+	                doubleClickZoom: false,
+	                zoomControl: false,
+	                attributionControl: false,
+	                maxBounds: bounds
+			  });
 
 		  L.mapbox.tileLayer("mapbox.light", {
 			//attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>"'
