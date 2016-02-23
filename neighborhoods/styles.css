@@ -1,0 +1,146 @@
+
+            container {
+                margin-right: auto;
+                margin-left: auto;
+            }
+            h1 {
+                font-family: "Lora", serif;
+            }
+            /* unvisited link */
+            a {
+                transition: all 0.2s linear;
+                color: black;
+                text-decoration: none;                
+            }
+            /* visited link */
+            a:visited {
+                color: black;
+            }
+            /* mouse over link */
+            a:hover, a:focus {
+                color: #999999;
+            }
+            /* selected link */
+            a:active {
+                color: gray;
+            }
+            #container {
+                position: static;
+            }
+            #map-container {
+                margin-right: auto; 
+                margin-left: auto;
+                top:50%;
+                padding: 0;
+            }
+            #map {
+                position:static; 
+                top:0; 
+                bottom:0; 
+                width:75%; 
+                height:540px; 
+                margin-right: auto; 
+                margin-left: auto;
+            }
+            h1 {
+                position:static;
+                width:75%;
+                margin-right: auto; 
+                margin-left: auto;
+            }
+            #data {
+                position:static;
+                width:45%;
+                float:left;
+            }
+            h3 {
+                font-family: 'Lora', serif;
+                font-size: large;
+            }
+            #stories {
+                float: right;
+                left:30px;
+                text-align: right; 
+                margin-bottom: 20px;               
+            }
+            .storyname {
+                font-family: "Raleway", sans-serif;
+            }
+            #byline {
+                font-size: small;
+                color: #3D5C5C;
+            }
+            p {
+                font-family: 'Lora', serif;
+            }
+            #intro {
+                width:75%; 
+                font-family: 'Lora', serif;
+                margin-right: auto; 
+                margin-left: auto;                
+            }
+            #charts {
+              position: static;
+              float: right;
+             }
+             #about {
+                border: 1px solid gray;
+                float: right;
+                width: 30%;
+                margin-left: 20px;
+             }
+            p.introduction:first-letter {
+                 font-size: 44px;
+                 float: left; 
+                 color: #999999;
+                 line-height: 35px;
+                 padding-top: 3px; 
+                 padding-right: 3px;
+                 font-family: Times, serif, Georgia;
+                }
+            #twitter-button {
+                float: right;
+            }
+            #bottom-container {
+                font-family: 'Lora', serif;                
+                position:static; 
+                top:0; 
+                bottom:0; 
+                width:75%; 
+                height:540px; 
+                margin-right: auto; 
+                margin-left: auto;              
+            }
+            .navbar {
+                list-style-type: none;
+                overflow: hidden;
+                background-color: #414c4c;
+                width: 72.1%;
+                margin-right: auto; 
+                margin-left: auto;
+                text-align: justify;
+            }
+            ul {
+                display: table;
+                width: 100%;
+                list-style: none;
+            }
+            .navbar li {
+                display: table-cell;
+                text-align: center;                
+            }
+            .navbar li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                margin-left: auto;
+                font-size: large;
+            }          
+            .navbar li a:hover {
+                background-color: #a6a6a6;
+            }
+            .active {
+                background-color: #a6a6a6;
+            }

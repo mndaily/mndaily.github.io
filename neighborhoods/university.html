@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>University</title>
+      <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
+      <link rel="stylesheet" type="text/css" href="styles.css">
+      <style type="text/css">
+         h3 {
+         font-family: 'Lora', serif;
+         font-size: large;
+         width:40%;
+         }
+         p {
+         font-family: 'Lora', serif;
+         }
+      </style>
+      <script src="university.geojson"></script>
+      <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+      <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="leaflet.ajax.min.js"></script>
+   </head>
+   <body>
+      <div id="container">
+      <h1>University</h1>
+            <ul class="navbar">
+              <li><a  href="neighborhoods-map.html">Main Page</a></li>
+              <li><a  href="marcy-holmes.html">Marcy-Holmes</a></li>
+              <li><a  href="cedar-riverside.html">Cedar-Riverside</a></li>
+              <li><a  class="active"href="university.html">University</a></li>
+              <li><a  href="como.html">Como</a></li>
+              <li><a  href="prospect-park.html">Prospect Park</a></li>
+            </ul>      
+      <!-- Map -->
+      <div id="map-container">
+         <style>
+                        .menu-ui {
+                        background:#fff;
+                        position:absolute;
+                        top:150px;right:180px;
+                        z-index:1;
+                        border-radius:3px;
+                        width:120px;
+                        border:1px solid rgba(0,0,0,0.4);
+                        }
+                        .menu-ui a {
+                        font-size:13px;
+                        color:#404040;
+                        display:block;
+                        margin:0;padding:0;
+                        padding:10px;
+                        text-decoration:none;
+                        border-bottom:1px solid rgba(0,0,0,0.25);
+                        text-align:center;
+                        }
+                        .menu-ui a:hover {
+                        background:#f8f8f8;
+                        color:#c2d6d6;
+                        }
+                        .menu-ui a.active {
+                        background:#669999;
+                        color:#FFF;
+                        }
+                        .menu-ui a.active:hover {
+                        background:#c2d6d6;
+                        }
+         </style>
+         <nav id='menu-ui' class='menu-ui'></nav>
+         <div id="map" style="border:1px solid black"></div>
+         <!---Map script-->
+         <script>
+            var southWest = L.latLng(44.968119, -93.245695),
+                northEast = L.latLng(44.983055, -93.227113),
+                bounds = L.latLngBounds(southWest, northEast);
+            
+            L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+            var map = L.mapbox.map("map", "ethannels.3983d5de", {
+                center: [44.973705, -93.230975],
+                zoom: 14,
+                scrollWheelZoom: false,
+                touchZoom: false,
+                doubleClickZoom: false,
+                zoomControl: false,
+                attributionControl: true,
+                maxBounds: bounds
+            });
+            
+            var layers = document.getElementById('menu-ui');
+            
+            var coords = [
+                {
+                      "type": "Feature",
+                      "properties": { 
+                        "marker-color": "#ff1a1a",
+                        title: "Theft" },
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          -93.23515981435776,
+                          44.981926570043726
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Feature",
+                      "properties": { 
+                        "marker-color": "#ff1a1a", 
+                        title : "Attempt to cause bodily harm"},
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          -93.21004360914229,
+                          44.96928788572792
+                        ]
+                      }
+                    }
+                ];
+            
+            var crimes = map.featureLayer.setGeoJSON(coords);
+            
+            addLayer(crimes, "Recent Crime", 1);
+            
+            function addLayer(layer, name, zIndex) {
+                layer 
+                    .setZIndex(zIndex)
+                    .addTo(map);
+            
+                    var link = document.createElement('a');
+                        link.href = '#';
+                        link.className = 'active';
+                        link.innerHTML = name;
+            
+                    link.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+            
+                        if (map.hasLayer(layer)) {
+                            map.removeLayer(layer);
+                            this.className = '';
+                        } else {
+                            map.addLayer(layer);
+                            this.className = 'active';
+                        }
+                    };
+            
+            layers.appendChild(link);
+            
+            }
+            
+            map.featureLayer.on('mouseover', function(e) {
+                e.layer.openPopup();
+            });
+            map.featureLayer.on('mouseout', function(e) {
+                e.layer.closePopup();
+            });
+            
+            
+            function style(feature) {
+                return {
+                    color: "#669999",
+                    weight: 3,
+                    opacity: .6
+                };
+            }
+            
+              var geojson;
+            
+              function resetHighlight(d) {
+                geojson.resetStyle(d.target);
+                info.update();
+              }
+            
+              function zoomToFeature(d) {
+                map.fitBounds(d.target.getBounds());
+              }
+            
+              geojson = L.geoJson(university, {
+                style: style,
+              }).addTo(map);
+            
+              geojson.on('click', function(d) {
+                location.replace("neighborhoods-map.html");
+              });
+            
+         </script>
+         <script>
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+
+              var data = google.visualization.arrayToDataTable([
+                ['Status', 'Percentage', { role: 'style' }],
+                ['Renter Occupied', 96.8, 'color: #94b8b8'],
+                ['Owner Occupied', 3.2, 'color: #5c8a8a']
+              ]);
+   
+              var data2 = google.visualization.arrayToDataTable([
+                ['Race', 'Percentage'],
+                ['White Alone', 82.1],
+                ['Black or African American Alone', 1.5],
+                ["American Indian and Alaska Native Alone", 0.1],
+                ["Asian Alone", 9],
+                ["Another Race Alone", 3],
+                ["Two or More Races", 4.4]
+              ]);
+
+              var options = {
+                title: 'Housing status',
+                legend: "none",
+                bar: {groupWidth: "95%"},
+                chartArea: {  width: "100%", height: "70%" }                
+              };
+              var options2 = {
+                title: 'Race Breakdown',
+                "width": 400,
+                "height": 270,
+                "legend": "none",
+                "pieSliceBorderColor": "black",        
+                colors: ['#669999', '#f0f5f5', '#0a0f0f', '#94b8b8', '#c2d6d6', '#3d5c5c']
+              };
+              
+              var chart = new google.visualization.BarChart(document.getElementById('housing'));
+              chart.draw(data, options);
+              var chart2 = new google.visualization.PieChart(document.getElementById('race'));
+              chart2.draw(data2, options2);
+            }
+      </script>
+
+    </div>
+      <div id="bottom-container">
+            <p id="intro"><div id="about"><a href="about.html">About the data</a><p>Learn more about the <em>Minnesota Daily</em> web desk's mapping and data project</p></div>
+
+            <p class="introduction">T</p><p style="text-align: justify;">he University of Minnesota, the state's flagship university, straddles two cities and two sides of the Mississippi. Roughly 50,000 students attend the school, which was founded in the 1850s. The area has seen rapid development over the past few decades, and the school's leaders have bought up more land in recent years.</p>
+        </p>
+         <div id="data">            
+            <h3>Population</h3>
+            <p><b>• 6,301</b> total population</p>
+            <p><b>• .6</b> square miles</p>
+            <p><b>• 10,539.7</b> people per square mile</p>
+            <h3>Housing</h3>
+            <p><b>• 352</b> total housing units</p>
+            <p><b>• $791</b> median rent, lower than the Minneapolis average</p>
+            <p><b>• 51%</b> median rent as a percentage of household income, higher than the Minneapolis average</p>
+            <p><b>• 1975</b> median year structure built, later than the Minneapolis average</p>
+            <h3>Demographics</h3>
+            <p><b>• 95%</b> between ages 18 and 24, higher than the Minneapolis average</p>
+            <p><b>• 82.1%</b> white, higher than the Minneapolis average</p>
+            <p><b>• 1.5%</b> black, lower than the Minneapolis average</p>
+            <p><b>• 9%</b> Asian, higher than the Minneapolis average</p>
+            <h3>Income and Poverty</h3>
+            <p><b>• 89.3%</b> below poverty line in 2013, around five times more than the Minneapolis average</p>
+            <p><b>• 51%</b> median gross rent as a percentage of household income in 2013, much more than the Minneapolis average</p>            
+            <p style="font-size:10px;"><em>Source: 2014 American Community Survey</em></p>
+         </div>
+            <div id="stories">
+              <div style="font-family:'Lora', serif; font-size: large; font-weight:bold"><a href="http://www.mndaily.com/topics/university">Recent Stories</a></div>
+              <br>
+              <div id="storyname" class="stories"><a href="http://www.mndaily.com/news/campus/2016/02/11/report-reveals-problems-us-psychiatry-department-0">
+Report reveals problems in U's psychiatry department</a></div>
+              <div id="byline">By <b>Kevin Beckman</b></div>
+              <br>
+              <div id="storyname" class="stories"><a href="http://www.mndaily.com/news/campus/2015/12/12/kaler-calls-more-financial-oversight-athletics">Kaler calls for more financial oversight in Athletics</a></div>
+              <div id="byline">By <b>Nick Wicker</b></div>
+              <br>
+            </div>         
+      <div id="charts">
+         <div id="housing" style="width: 400px; height: 200px; position: absolute; left: 962; top:858; float:right;"></div>
+         <div id="race" style="width: 400px; height: 200px; padding-top:200px;"></div>
+      </div>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Marcy-Holmes</title>
+    <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="marcy-holmes.geojson"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>        
+	</head>
+	<body>
+
+        <div id="container">
+            <h1>Marcy-Holmes</h1>
+            <ul class="navbar">
+              <li><a  href="neighborhoods-map.html">Main Page</a></li>
+              <li><a  class="active" href="marcy-holmes.html">Marcy-Holmes</a></li>
+              <li><a  href="cedar-riverside.html">Cedar-Riverside</a></li>
+              <li><a  href="university.html">University</a></li>
+              <li><a  href="como.html">Como</a></li>
+              <li><a  href="prospect-park.html">Prospect Park</a></li>
+            </ul>            
+        <!-- Map -->
+        <div id="map-container">
+         <style>
+                        .menu-ui {
+                        background:#fff;
+                        position:absolute;
+                        top:150px;right:180px;
+                        z-index:1;
+                        border-radius:3px;
+                        width:120px;
+                        border:1px solid rgba(0,0,0,0.4);
+                        }
+                        .menu-ui a {
+                        font-size:13px;
+                        color:#404040;
+                        display:block;
+                        margin:0;padding:0;
+                        padding:10px;
+                        text-decoration:none;
+                        border-bottom:1px solid rgba(0,0,0,0.25);
+                        text-align:center;
+                        }
+                        .menu-ui a:hover {
+                        background:#f8f8f8;
+                        color:#c2d6d6;
+                        }
+                        .menu-ui a.active {
+                        background:#669999;
+                        color:#FFF;
+                        }
+                        .menu-ui a.active:hover {
+                        background:#c2d6d6;
+                        }
+         </style>
+         <nav id='menu-ui' class='menu-ui'></nav>            
+	       <div id="map" style="border:1px solid black"></div>
+
+		  <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+		  <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+
+		  <script src="leaflet.ajax.min.js"></script>
+		  <script>
+
+        var southWest = L.latLng(44.970003, -93.284770),
+            northEast = L.latLng(45.000599, -93.212071),
+            bounds = L.latLngBounds(southWest, northEast);
+
+		L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+		var map = L.mapbox.map("map", "ethannels.3983d5de", {
+      			center: [44.984713, -93.245631],
+      			zoom: 14,
+      			scrollWheelZoom: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+            zoomControl: false,
+            attributionControl: true,
+            maxBounds: bounds
+		  });
+
+		  function style(feature) {
+            return {
+			 color: "#669999",
+			 weight: 3,
+			 opacity: .6
+		          };
+            }
+            var layers = document.getElementById('menu-ui');
+            
+            var coords = [
+                {
+                      "type": "Feature",
+                      "properties": { 
+                        "marker-color": "#ff1a1a",
+                        title: "Theft" },
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          -93.23515981435776,
+                          44.981926570043726
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Feature",
+                      "properties": { 
+                        "marker-color": "#ff1a1a", 
+                        title : "Attempt to cause bodily harm"},
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          -93.21004360914229,
+                          44.96928788572792
+                        ]
+                      }
+                    }
+                ];
+            
+            var crimes = map.featureLayer.setGeoJSON(coords);
+            
+            addLayer(crimes, "Recent Crime", 1);
+            
+            function addLayer(layer, name, zIndex) {
+                layer 
+                    .setZIndex(zIndex)
+                    .addTo(map);
+            
+                    var link = document.createElement('a');
+                        link.href = '#';
+                        link.className = 'active';
+                        link.innerHTML = name;
+            
+                    link.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+            
+                        if (map.hasLayer(layer)) {
+                            map.removeLayer(layer);
+                            this.className = '';
+                        } else {
+                            map.addLayer(layer);
+                            this.className = 'active';
+                        }
+                    };
+            
+            layers.appendChild(link);
+            
+            }
+            
+            map.featureLayer.on('mouseover', function(e) {
+                e.layer.openPopup();
+            });
+            map.featureLayer.on('mouseout', function(e) {
+                e.layer.closePopup();
+            });
+
+          var geojson;
+
+          function resetHighlight(d) {
+            geojson.resetStyle(d.target);
+            info.update();
+          }
+
+          function zoomToFeature(d) {
+            map.fitBounds(d.target.getBounds());
+          }
+
+          geojson = L.geoJson(marcyHolmes, {
+            style: style,
+          }).addTo(map);
+
+          geojson.on('click', function(d) {
+            location.replace("neighborhoods-map.html");
+          });
+
+		</script>
+        <script>
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+
+              var data = google.visualization.arrayToDataTable([
+                ['Status', 'Percentage', { role: 'style' }],
+                ['Renter Occupied', 85.8, 'color: #94b8b8'],
+                ['Owner Occupied', 14.2, 'color: #5c8a8a']
+              ]);
+   
+              var data2 = google.visualization.arrayToDataTable([
+                ['Race', 'Percentage'],
+                ['White Alone', 77.4],
+                ['Black or African American Alone', 5.8],
+                ["American Indian and Alaska Native Alone", .1],
+                ["Asian Alone", 10.9],
+                ["Another Race Alone", 1.8],
+                ["Two or More Races", 4.0]
+              ]);
+
+              var options = {
+                title: 'Housing status',
+                bar: {groupWidth: "95%"},
+                legend: "none",
+                chartArea: {  width: "100%", height: "70%" }
+              };
+
+              var options2 = {
+                title: "Race Breakdown",
+                "width": 400,
+                "height": 270,
+                "legend": "none",
+                "pieSliceBorderColor": "black",
+                colors: ['#669999', '#f0f5f5', '#0a0f0f', '#94b8b8', '#c2d6d6', '#3d5c5c']               
+              };
+              
+              var chart = new google.visualization.BarChart(document.getElementById('housing'));
+              chart.draw(data, options);
+              var chart2 = new google.visualization.PieChart(document.getElementById('race'));
+              chart2.draw(data2, options2);
+            }
+      </script>        
+
+    </div>
+        <div id="bottom-container">
+            <p id="intro">
+            <div id="about"><a href="about.html">About the data</a><p>Learn more about the <em>Minnesota Daily</em>'s mapping and data project</p></div>
+            <p class="introduction">M</p><p>arcy-Holmes is known as the oldest neighborhood in Minneapolis, dating to the 1800s. As the gateway to the University District, the neighborhood has a mix of student renters and homeowners. Small shops and restaurants line the streets of Dinkytown, the commercial center of the area. The neighborhood also includes several historic University of Minnesota buildings, like the Old Main Power Plant near the Mississippi River. Dinkytown was designated a historic neighborhood in 2015. Restaurants, theaters and a brick road line the area along the Mississippi, known as the Riverfront. The Riverfront also includes Pillsbury Park and an industrial area to the north.</p>
+            <div id="data">
+                <h3>Population</h3>
+                <p><b>• 9,772</b> total population</p>
+                <p><b>• 0.75</b> square miles</p>
+                <p><b>• 13,084</b> people per square mile</p>
+                <h3>Housing</h3>
+                <p><b>• 4,623</b> total housing units</p>
+                <p><b>• $793</b> median rent, higher than the Minneapolis average</p>
+                <p><b>• 1952</b> median year structure built, later than the Minneapolis average</p>
+                <h3>Demographics</h3>
+                <p><b>• 56.7%</b> between ages 18 and 24, higher than the Minneapolis average</p>
+                <p><b>• 5.7%</b> black, lower than the Minneapolis average</p>
+                <p><b>• 77.4%</b> white, lower than the Minneapolis average</p>
+                <h3>Income and Poverty</h3>
+                <p><b>• 16.1%</b> below poverty line in 2013, about equal to the Minneapolis average</p>
+                <p><b>• 47.3%</b> median gross rent as a percentage of household income in 2013, more than the Minneapolis average</p>                
+                <p style="font-size:10px;"><em>Source: 2014 American Community Survey</em></p>        
+            </div>
+            <div id="stories">
+              <div style="font-family:'Lora', serif; font-size: large; font-weight:bold"><a href="http://www.mndaily.com/topics/marcy-holmes">Recent Stories</a></div>
+              <br>
+              <div id="storyname" class="stories"><a href="http://www.mndaily.com/news/metro-state/2016/01/31/cpm-development-sprawl-could-expand-marcy">
+CPM development sprawl could expand in Marcy</a></div>
+              <div id="byline">By <b>Ben Farniok</b></div>
+              <br>
+              <div id="storyname" class="stories"><a href="http://www.mndaily.com/news/metro-state/2016/01/28/new-condo-proposed-marcy-holmes">New condo proposed for Marcy-Holmes</a></div>
+              <div id="byline">By <b>Ben Farniok</b></div>
+              <br>
+            </div>               
+      <div id="charts">
+         <div id="housing" style="width: 400px; height: 200px; position: absolute; left: 962; top:810; float:right;"></div>
+         <div id="race" style="width: 400px; height: 200px; padding-top:250px;"></div>
+      </div> 
+        </div>
+	</body>
+</html>
