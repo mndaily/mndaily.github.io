@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Mapping the U</title>
+        <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="/nhoods.geojson"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+        <div id="container">
+        <h1>MAPPING THE U</h1>
+
+
+        <div id="map-container">
+	
+            <div id="map" style="border:1px solid black"></div>
+
+		<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+		<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
+
+		<script>
+
+            var southWest = L.latLng(44.968119, -93.245695),
+                northEast = L.latLng(44.983055, -93.219),
+                bounds = L.latLngBounds(southWest, northEast);        
+
+		L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+		var map = L.mapbox.map("map", "ethannels.3983d5de", {
+			center: [44.973, -93.227],
+            zoom: 14,
+			scrollWheelZoom: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+            zoomControl: false,
+            attributionControl: true,
+            maxBounds: bounds
+		});
+        
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create("div", "info");
+            this.update();
+            return this._div;
+        };
+
+        info.update = function(feature) {
+            this._div.innerHTML = "<h4>Neighborhood</h4>" + (feature ? '<b>' + feature.BDNAME + '</b>' : "Click on a neighborhood");
+        };
+
+        info.addTo(map);
+
+		function style(feature) {
+          return {
+			color: "#669999",
+			weight: 3,
+			opacity: .6,
+			//fillOpacity: .7,
+			fillColor: "#669999"
+		};
+    }
+		geojson = L.geoJson(boundaries, {
+		            style: style,
+		            onEachFeature: onEachFeature
+		        }).addTo(map);
+
+        function highlightFeature(d) {
+            var layer = d.target;
+
+            layer.setStyle( {
+                color: '#669999', 
+                weight: 3,
+                opacity: 0.6,
+                fillOpacity: 0.2,
+                fillColor: '#FFF'
+            });
+
+            info.update(layer.feature.properties);
+        }
+
+        var geojson;
+
+        function resetHighlight(d) {
+            geojson.resetStyle(d.target);
+            info.update();
+        }
+
+        function zoomToFeature(d) {
+            map.fitBounds(d.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+            //    click: zoomToFeature
+            });
+        }
+
+        geojson.on('click', function(d) {
+            location.replace(d.layer.feature.properties.url);
+        });
+
+		</script>
+     </div>
+     
+     <div id="intro" style="text-align:justify;">
+     	<div id="twitter-button" style="padding-left:8px;"><a href="https://twitter.com/MNDailyNews" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @MNDailyNews</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+ 	 </div>
+        <p><p class="introduction">W</p>elcome to the <i>Minnesota Daily</i>'s neighborhoods portal, an interactive mapping project compiling and displaying data for the five University of Minnesota-area neighborhoods as defined by the City of Minneapolis. The data for the University community's roughly 35,000 residents mostly comes from the 2014 American Community Survey, a five-year estimate compiled by the U.S. Census bureau and based on the 2010 Census. </p>
+        <p>The five maps, created by the <i>Daily</i>'s web desk,  contain an area of around five square miles and include data about income, crime,  race and general population statistics. Click on a neighborhood to get started.</p>
+        <p><img style="margin-left:auto; margin-right:auto; display:block;" src="/mndaily.png"></img></p>
+     </div>
+
+
+ </div>
+
+	</body>
+</html>
