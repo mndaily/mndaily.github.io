@@ -5,16 +5,6 @@
       <title>University</title>
       <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
       <link rel="stylesheet" type="text/css" href="styles.css">
-      <style type="text/css">
-         h3 {
-         font-family: 'Lora', serif;
-         font-size: large;
-         width:40%;
-         }
-         p {
-         font-family: 'Lora', serif;
-         }
-      </style>
       <script src="university.geojson"></script>
       <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
       <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -36,40 +26,9 @@
             </ul>      
       <!-- Map -->
       <div id="map-container">
-         <style>
-                        .menu-ui {
-                        background:#fff;
-                        position:absolute;
-                        top:150px;right:180px;
-                        z-index:1;
-                        border-radius:3px;
-                        width:120px;
-                        border:1px solid rgba(0,0,0,0.4);
-                        }
-                        .menu-ui a {
-                        font-size:13px;
-                        color:#404040;
-                        display:block;
-                        margin:0;padding:0;
-                        padding:10px;
-                        text-decoration:none;
-                        border-bottom:1px solid rgba(0,0,0,0.25);
-                        text-align:center;
-                        }
-                        .menu-ui a:hover {
-                        background:#f8f8f8;
-                        color:#c2d6d6;
-                        }
-                        .menu-ui a.active {
-                        background:#669999;
-                        color:#FFF;
-                        }
-                        .menu-ui a.active:hover {
-                        background:#c2d6d6;
-                        }
-         </style>
-         <nav id='menu-ui' class='menu-ui'></nav>
-         <div id="map" style="border:1px solid black"></div>
+
+         
+         <div id="map" style="border:1px solid black"><nav id='menu-ui' class='menu-ui'></nav></div>
          <!---Map script-->
          <script>
             var southWest = L.latLng(44.968119, -93.245695),
