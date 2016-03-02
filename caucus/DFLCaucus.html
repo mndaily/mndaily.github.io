@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>DFL Caucus</title>
+        <link rel="stylesheet" type="text/css" href="lymestyles.css">
+		<script src="districts.geojson"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.6/c3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.6/c3.min.css"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+
+	</head>
+	<body>
+        <div id="container">
+
+				<style>
+				.legend label,
+				.legend span {
+				  display:block;
+				  float:left;
+				  height:15px;
+				  width:20%;
+				  text-align:center;
+				  font-size:9px;
+				  color:#808080;
+				  }
+				</style>
+
+				<!-- Set the display of this container to none so we can
+				     add it programmatically to `legendControl` -->
+				<div id='legend' style='display:none;'>
+				  <span>
+				  	<strong>Minnesota 2016 DFL Caucus</strong>
+				  	<nav class='legend clearfix'>
+					<small>Source: Associated Press</a></small>
+				    </span>
+				</div>
+	
+            <div id="map" style="border:1px solid black"></div>
+
+		<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+		<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
+
+		<script src="leaflet.ajax.min.js"></script>
+		<script>
+
+		L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+		var map = L.mapbox.map("map", "mapbox.light", {
+			center: [46.15, -94.196],
+            zoom: 6,
+			scrollWheelZoom: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+            zoomControl: false,
+            attributionControl: true,
+            dragging: false,
+            legendControl: {position: 'bottomleft'}
+		});
+		map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+        var geojson;
+
+        geojson = L.geoJson(congress, {
+        	style:
+        	function(feature) {
+        		switch(feature.properties.NAMELSAD){
+        			case "Congressional District 1": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};
+     			case "Congressional District 2": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};
+        		case "Congressional District 3": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};   
+        		case "Congressional District 4": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};
+        		case "Congressional District 5": return {
+        				fillColor:"blue",
+        				color:"blue",
+        				weight:1};
+                case "Congressional District 6": return {
+                        fillColor:"blue",
+                        color:"blue",
+                        weight:1}; 
+                case "Congressional District 7": return {
+                        fillColor:"blue",
+                        color:"blue",
+                        weight:1}; 
+                case "Congressional District 8": return {
+                        fillColor:"blue",
+                        color:"blue",
+                        weight:1};                                                 				         		     				     		
+        			}
+        			},
+        		        	
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+      function onEachFeature(feature, layer) {
+          var popupContent = "<p><b>" +
+          feature.properties.NAMELSAD + "</b></p>" + "<p>" + feature.properties.DWINNER + "</p>";
+          
+          if (feature.properties) {
+             layer.bindPopup(popupContent);
+          }}
+
+
+		</script>
