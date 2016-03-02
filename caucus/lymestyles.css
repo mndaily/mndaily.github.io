@@ -1,0 +1,57 @@
+            body {
+                background-color: #F8F8F8;
+            }
+            #container {
+                position: static;
+            }
+            #map-container {
+                margin-right: auto; 
+                margin-left: auto;
+                top:50%;
+                left:50%;
+            }
+            #map {
+                position:static; 
+                top:0; 
+                bottom:0; 
+                width:500px; 
+                height:540px; 
+                margin-right: auto; 
+                margin-left: auto;
+            }
+            #data {
+                position:static;
+                padding-left:10%;
+                width:45%;
+                float:left;
+            }
+            h3 {
+                font-family: 'Lora', serif;
+                font-size: large;
+            }
+            #stories {
+                float:left;
+                width:30%;
+            }
+            p {
+                font-family: 'Lora', serif;
+            }
+            #intro {
+                padding-left: 11%;
+                left:50%;
+                top:50%;
+                position: static;
+            }
+
+            .info {
+                padding: 6px 8px;
+                font: 14px/16px Arial, Helvetica, sans-serif;
+                background: white;
+                background: rgba(255,255,255,0.8);
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                border-radius: 5px;
+            }
+            .info h4 {
+                margin: 0 0 5px;
+                color: #777;
+            }
