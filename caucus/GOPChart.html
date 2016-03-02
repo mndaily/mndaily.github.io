@@ -1,0 +1,42 @@
+  <!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GOP Chart</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+  <div id="chart_div"></div>
+    <body>
+
+    <script>
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(chart);
+
+        function chart() {
+              var data = google.visualization.arrayToDataTable([
+                ['Candidate', 'Percent'],
+                ['Marco Rubio', 36.77],
+                ['Ted Cruz', 28.87],
+                ['Donald Trump', 21.17],
+                ['Ben Carson', 7.24],
+                ['John Kasich', 5.77],
+                ['Write-In', .18]
+              ]);
+
+              var options = {
+                title: 'Minnesota Republican Presidential Caucus',
+                chartArea: {width: '50%'},
+                colors: ['#b0120a', '#ffab91'],
+                hAxis: {
+                  title: 'Percent of votes',
+                  minValue: 0
+                },
+                vAxis: {
+                  title: 'Candidate'
+                },
+                legend: "none"
+              };
+              var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+    </script> 

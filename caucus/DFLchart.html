@@ -1,0 +1,38 @@
+  <!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>DFL Graph</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+  <div id="chart_div"></div>
+    <body>
+
+    <script>
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(chart);
+
+        function chart() {
+              var data = google.visualization.arrayToDataTable([
+                ['Candidate', 'Percent'],
+                ['Hillary Clinton', 40.13],
+                ['Bernie Sanders', 59.87]
+              ]);
+
+              var options = {
+                title: 'Minnesota Democratic Presidential Caucus',
+                chartArea: {width: '50%'},
+                colors: ['#b0120a', '#ffab91'],
+                hAxis: {
+                  title: 'Percent of votes',
+                  minValue: 0
+                },
+                vAxis: {
+                  title: 'Candidate'
+                },
+                legend: "none"
+              };
+              var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+    </script> 
