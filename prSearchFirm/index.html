@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+	<title>Search Firms</title>
+	<style>
+
+	</style>
+
+</head>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.7/c3.min.js"></script>
+<body>
+<div id="chart"></div>
+</body>
+<script>
+
+	var chart = c3.generate({
+		data: {
+			json: [
+				{employee: "Robin Michaels", searchFirm: "Alexander, Wolfman, Stark", contract: 54000, salary: 80000}
+			],
+			keys: {
+				x: "salary",
+				value: ["search Firm"],
+			},
+			// xs: {
+			// 	AlexanderWolfmanStark: "Alexander, Wolfman, Stark_x",
+			// 	BallingerLeafblad: "Ballinger Leafblad_x",
+			// 	CameSweeney: "Came Sweeney_x",
+			// 	ChandlerGroup: "Chandler Group_x",
+			// 	GreenwoodAsher: "Greenwood, Asher_x",
+			// 	HRConnection: "HR Connection_x",
+			// 	IsaacsonMiller: "Isaacson Miller_x",
+			// 	KeystoneSearch: "Keystone Search_x",
+			// 	KornFerry: "Korn/Ferry_x",
+			// 	ParkerExec: "Parker Exec_x",
+			// 	RWilliamFunk: "R. William Funk_x",
+			// 	RussellReynolds: "Russel Reynolds_x",
+			// 	SSI: "SSI_x",
+			// 	StorbeckPimtel: "Storbeck Pimtel_x",
+			// 	WatersAndCompany: "Waters and Company_x",
+			// 	Witt: "Witt Kieffer Ford Hadelman Lloyd_x",
+			// 	WoodExec: "Wood Exec_x",
+			// },
+			// columns: [
+			// 	["Alexander, Wolfman, Stark_x", 54000, "Robin Michaels"],
+			// 	["AlexanderWolfmanStark", 10000],
+			// ],
+			type: "scatter",
+		},
+		axis: {
+	        x: {
+	        	// type: "category",
+	            label: "Contract Cost",
+	            tick: {
+	                fit: false
+	            }
+	        },
+	        y: {
+	            label: "Employee's 2014 salary"
+	        }
+	    },
+	    // tooltip: {
+	    // 	contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+	    // 		return employee  salary;
+	    // 	}
+	    // }
+	});
+</script>
+</html>
