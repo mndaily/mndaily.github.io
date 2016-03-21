@@ -103,6 +103,18 @@
             }
         }
 
+        function maxDistance() {
+            var m;
+            for(i = 1; i <= totalQuestions; i++) {
+                m = m + (totalQuestions * (5))
+            }
+            return m;
+        }
+
+        function pick() {
+            return ( maxDistance -
+        }
+
         // sets classes for each question div to its default styling.
         function ApplyDefaultQuestionStyles() {
             for(i = 1; i <= totalQuestions; i++) {
@@ -148,10 +160,10 @@
         <div id="1">
             <p><strong>Question 1</strong></p>
             <p>Stuff should happen to mental health</p>
-            <p><input type="radio" value="A" onClick="SetAnswer(1, this.value)" name="radiobutton1">Strongly agree</p>
-            <p><input type="radio" value="B" onClick="SetAnswer(1, this.value)" name="radiobutton1">Agree</p>
-            <p><input type="radio" value="C" onClick="SetAnswer(1, this.value)" name="radiobutton1">Disagree</p>
-            <p><input type="radio" value="D" onClick="SetAnswer(1, this.value)" name="radiobutton1">Don't care</p>            
+            <p><input type="radio" value="1" onClick="SetAnswer(1, this.value)" name="radiobutton1">Strongly agree</p>
+            <p><input type="radio" value="2" onClick="SetAnswer(1, this.value)" name="radiobutton1">Agree</p>
+            <p><input type="radio" value="3" onClick="SetAnswer(1, this.value)" name="radiobutton1">Disagree</p>
+            <p><input type="radio" value="4" onClick="SetAnswer(1, this.value)" name="radiobutton1">Don't care</p>            
         </div>
 <!--             <p>How important is this issue to you?</p>            
             <input type="radio" weight="2" onClick="SetWeight(1, this.weight)" name="radiobutton2">Very
@@ -160,10 +172,10 @@
         <div id="2">
             <p><strong>Question 2</strong></p>
             <p>Divestment is something that happens</p>
-            <p><input type="radio" value="A" onClick="SetAnswer(2, this.value)" name="radiobutton2">Strongly agree</p>
-            <p><input type="radio" value="B" onClick="SetAnswer(2, this.value)" name="radiobutton2">Agree</p>
-            <p><input type="radio" value="C" onClick="SetAnswer(2, this.value)" name="radiobutton2">Don't care</p>
-            <p><input type="radio" value="D" onClick="SetAnswer(2, this.value)" name="radiobutton2">Disagree</p>
+            <p><input type="radio" value="1" onClick="SetAnswer(2, this.value)" name="radiobutton2">Strongly agree</p>
+            <p><input type="radio" value="2" onClick="SetAnswer(2, this.value)" name="radiobutton2">Agree</p>
+            <p><input type="radio" value="3" onClick="SetAnswer(2, this.value)" name="radiobutton2">Don't care</p>
+            <p><input type="radio" value="4" onClick="SetAnswer(2, this.value)" name="radiobutton2">Disagree</p>
         </div>        
         <p>
 
