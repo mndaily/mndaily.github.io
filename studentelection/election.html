@@ -67,11 +67,11 @@
 
         // quiz answers
 
-        abeer[1] = "1";
-        abeer[2] = "3";
+        abeer[0] = 1;
+        abeer[1] = 3;
 
-        cam[1] = "2";
-        cam[2] = "4";        
+        cam[0] = 2;
+        cam[1] = 4;        
 
         // sets the users answer selection to the appropriate array element
         // in the userAnswers array.
@@ -89,19 +89,19 @@
         // returns the number of correct answers
 
         function abeerDifference() {
-            for(i = 0; i <= userAnswers.length; i++) {
-                abeerDiff[i] = weight[i] * pow(abeer[i] - userAnswers[i], 2);
+            for(i = 0; i < userAnswers.length; i++) {
+                abeerDiff[i] = weight[i] * Math.pow((abeer[i] - userAnswers[i]), 2);
             }
             var sum;
-            for(i = 0; i <= abeerDiff.length; i++) {
-                sum += abeerDiff[i];
-             }
-            return Math.sqrt(sum);
+            for(i = 0; i < abeerDiff.length; i++) {
+                 sum += abeerDiff[i];
+            }
+            return abeerDiff;
         }
 
         function camDifference() {
-            for(i = 0; i <= userAnswers.length; i++) {
-                camDiff[i] = weight[i] * pow(cam[i] - userAnswers[i], 2);
+            for(i = 0; i < userAnswers.length; i++) {
+                camDiff[i] = weight[i] * ((cam[i] - userAnswers[i]) * (cam[i] - userAnswers[i]));
             }
             var sum;
             for(i = 0; i <= camDiff.length; i++) {
@@ -111,13 +111,26 @@
         }
 
         function maxDistance() {
-            var m;
-            for(i = 1; i <= totalQuestions; i++) {
-                m = m + (userAnswers.length * (4))
-            }
+            var m = (userAnswers.length * (4))
             return Math.sqrt(m);
         }
 
+        function pick() {
+            var p = (maxDistance() - abeerDifference()) / maxDistance();
+            var q = (maxDistance() - camDifference()) / maxDistance();
+            if (p < q) {
+                return "Abeer Syedah";
+            }
+            else {
+                return "The other guy";
+            }
+        }
+        function CheckAnswers() {
+            var totalQuestions = '2';
+            // ApplyDefaultQuestionStyles();            
+            alert("You should vote for: " + abeerDifference() + ".");
+            //document.write("<h1>hello</h1>");
+        }
         // function abeerSum() {
         //     var sum = 0;
         //     for(i = 1; i <= totalQuestions; i++) {
@@ -144,16 +157,7 @@
         //     }
         // }
 
-        function pick() {
-            var p = (maxDistance() - abeerDifference()) / maxDistance();
-            var q = (maxDistance() - camDifference()) / maxDistance();
-            if (p > q) {
-                return "Abeer Syedah";
-            }
-            else {
-                return "The other guy";
-            }
-        }
+
 
         // // sets classes for each question div to its default styling.
         // function ApplyDefaultQuestionStyles() {
@@ -169,19 +173,7 @@
 
         // calls all appropriate functions in order to check answers and mark
         // incorrect questions.
-        function CheckAnswers() {
-            var totalQuestions = '2';
-            // ApplyDefaultQuestionStyles();            
-            var score;
-            if (abeerSum() > camSum()) {
-                score = "Abeer";
-            }
-            else {
-                score = "Cam";
-            }
-            alert("You should vote for: " + score + ".");
-            //document.write("<h1>hello</h1>");
-        }
+
 
     // function result(score,totalQuestions){
     //           document.write("Score" +score);
@@ -200,26 +192,32 @@
         <div class="question" id="1">
             <p><strong>Question 1</strong></p>
             <p>Stuff should happen to mental health</p>
-            <p><input type="radio" value="1" onClick="SetAnswer(1, this.value)" name="radiobutton1">Strongly agree</p>
-            <p><input type="radio" value="2" onClick="SetAnswer(1, this.value)" name="radiobutton1">Agree</p>
-            <p><input type="radio" value="3" onClick="SetAnswer(1, this.value)" name="radiobutton1">Disagree</p>
-            <p><input type="radio" value="4" onClick="SetAnswer(1, this.value)" name="radiobutton1">Don't care</p>            
+            <p><input type="radio" value="1" onClick="SetAnswer(0, this.value)" name="radiobutton1">Strongly agree</p>
+            <p><input type="radio" value="2" onClick="SetAnswer(0, this.value)" name="radiobutton1">Agree</p>
+            <p><input type="radio" value="3" onClick="SetAnswer(0, this.value)" name="radiobutton1">Disagree</p>
+            <p><input type="radio" value="4" onClick="SetAnswer(0, this.value)" name="radiobutton1">Don't care</p>            
         </div>
 
         <div id="w1">
             <p>How important is this issue to you?</p>
-            <input type="radio" weight="2" onClick="SetWeight(1, this.weight)" name="radiobutton2">Very
-            <input type="radio" weight="1" onClick="SetWeight(1, this.weight)" name="radiobutton2">Not at all
+            <input type="radio" weight="2" onClick="SetWeight(0, this.weight)" name="radiobutton2">Very
+            <input type="radio" weight="0" onClick="SetWeight(0, this.weight)" name="radiobutton2">Not at all
         </div>
 
         <div class="question" id="2">
             <p><strong>Question 2</strong></p>
             <p>Divestment is something that happens</p>
-            <p><input type="radio" value="1" onClick="SetAnswer(2, this.value)" name="radiobutton2">Strongly agree</p>
-            <p><input type="radio" value="2" onClick="SetAnswer(2, this.value)" name="radiobutton2">Agree</p>
-            <p><input type="radio" value="3" onClick="SetAnswer(2, this.value)" name="radiobutton2">Don't care</p>
-            <p><input type="radio" value="4" onClick="SetAnswer(2, this.value)" name="radiobutton2">Disagree</p>
-        </div>        
+            <p><input type="radio" value="1" onClick="SetAnswer(1, this.value)" name="radiobutton3">Strongly agree</p>
+            <p><input type="radio" value="2" onClick="SetAnswer(1, this.value)" name="radiobutton3">Agree</p>
+            <p><input type="radio" value="3" onClick="SetAnswer(1, this.value)" name="radiobutton3">Don't care</p>
+            <p><input type="radio" value="4" onClick="SetAnswer(1, this.value)" name="radiobutton3">Disagree</p>
+        </div>
+
+        <div id="w1">
+            <p>How important is this issue to you?</p>
+            <input type="radio" weight="2" onClick="SetWeight(1, this.weight)" name="radiobutton4">Very
+            <input type="radio" weight="0" onClick="SetWeight(1, this.weight)" name="radiobutton4">Not at all
+        </div>                
         <p>
 
         <input type="submit" class="ui-button" onClick="CheckAnswers()" value="Submit Answers" name="submitButton" class="button"></p>
