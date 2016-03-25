@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="cedar-riverside.geojson"></script>
+    <scropt src="cedar-crime.geojson"></script>
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -66,35 +67,14 @@
 
                 var layers = document.getElementById('menu-ui');
 
-                var coords = [{
-                    "type": "Feature",
-                    "properties": {
-                        "marker-color": "#ff1a1a",
-                        title: "Theft"
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [-93.23515981435776,
-                            44.981926570043726
-                        ]
-                    }
-                }, {
-                    "type": "Feature",
-                    "properties": {
-                        "marker-color": "#ff1a1a",
-                        title: "Attempt to cause bodily harm"
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [-93.21004360914229,
-                            44.96928788572792
-                        ]
-                    }
-                }];
+                var crimes = L.mapbox.featureLayer()
+                    .loadURL("cedar-crime.geojson")
+                    .addTo(map);
 
-                var crimes = map.featureLayer.setGeoJSON(coords);
+                //L.geoJson(coords).addTo(map);
+               // var crimes = 
 
-                addLayer(crimes, "Recent Crime", 1);
+               // addLayer(crimes, "Recent Crime", 1);
 
                 function addLayer(layer, name, zIndex) {
                     layer
