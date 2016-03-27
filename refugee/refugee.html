@@ -4,15 +4,27 @@
 	<meta charset="UTF-8">
 	<title>Refugees in Minnesota</title>
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<style type="text/css">
+			div.tooltip {	
+			    position: absolute;			
+			    text-align: center;			
+			    padding: 9px;				
+			    font: 12px sans-serif;		
+			    background: slategray;	
+			    border: 0px;		
+			    border-radius: 8px;			
+			    pointer-events: none;			
+			}		
+	</style>		
 </head>
 <body>
 	<script type="text/javascript">
-		var w = 1600;
+		var w = 1300;
 		var h = 700;
 
 		//Define map projection
 		var projection = d3.geo.mercator()
-							   .translate([w/2 - 50, h/2 + 100])
+							   .translate([w/2, h/2 + 100])
 							   .scale([200]);
 
 		//Define path generator
@@ -21,8 +33,11 @@
 						 
 		//Define quantize scale to sort data values into buckets of color
 		var color = d3.scale.quantize()
-							.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
-							//Colors taken from colorbrewer.js, included in the D3 download
+							.range(["rgb(230, 255, 230)","rgb(179, 255, 179)","rgb(128, 255, 128)","rgb(77, 255, 77)","rgb(0, 255, 0)", "rgb(0, 153, 0)", "rgb(0, 102, 0)", "rgb(0, 51, 0)"]);
+
+		var div = d3.select("body").append("div")	
+			    .attr("class", "tooltip")				
+			    .style("opacity", 1);
 
 		//Create SVG element
 		var svg = d3.select("body")
@@ -37,7 +52,7 @@
 				d3.max(data, function(d) { return d.Total; })
 			]);
 		
-			d3.json("countries.json", function(json) {
+			d3.json("country.json", function(json) {
 
 				//Merge the data and GeoJSON
 				//Loop through once for each data value
@@ -62,6 +77,16 @@
 						}
 					}		
 				}
+				function hover(d) {
+			   		for (var i = 0; i < d.features.length; i++) {
+				   		if (d.properties.total != undefined) {
+				   			return "None";
+				   		}
+				   		else {
+				   			return d.properties.total;
+				   		}
+				   	}
+				}
 
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
@@ -69,7 +94,8 @@
 				   .enter()
 				   .append("path")
 				   .attr("d", path)
-				   .style("stroke", "black")
+				   .style("stroke", "grey")
+				   .style("fill-opacity", .7)
 				   .style("fill", function(d) {
 				   		//Get data value
 				   		var value = d.properties.total;
@@ -81,7 +107,33 @@
 				   			//If value is undefined…
 					   		return "#ccc";
 				   		}				
-				   });		
+				   })
+					.on("mousemove", function(d, i) {
+					   	var currentCountry = this;
+					   	function over() {
+					   		if (d.properties.total == undefined) {
+					   			return "none or unknown";
+					   		}
+					   		else {
+					   			return d.properties.total;
+					   		}
+					   	}
+					   	d3.select(this).style("fill-opacity", 1)
+					   	div.transition()
+					   		.duration(100)
+					   		.style("opacity", .9);
+					   	div .html("Refugees from " + d.properties.admin + " since 1979: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");					   	
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("fill-opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(200)
+						   	   .style("opacity", 0)
+						   	});   
 
 		});
 	});
