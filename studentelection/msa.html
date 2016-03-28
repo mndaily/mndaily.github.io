@@ -87,3 +87,54 @@
     <link type="text/css" rel="stylesheet" href="simplePagination/simplePagination.css"/>    
     <script src="simplePagination/jquery.simplePagination.js"></script>
     <script type="text/javascript">
+
+        var userAnswers = new Array;
+
+        function test(pageNumber)
+            {
+              var page = "#" + pageNumber;
+              var w = "#w" + pageNumber;
+              $('.question').hide()
+              $('.weight').hide()
+              $(page).show()
+              $(w).show()
+            }
+
+        function pageOne() {
+            var page_1 = "#1";
+            var w = "#w1";
+            $('.question').hide()
+            $('.weight').hide()
+            $(page_1).show()
+            $(w).show()
+        }                    
+    </script>
+
+</head>
+
+<body>
+    <div class="header"><img class="logo" id="p1" src="logo.png"></img>
+        <h1>MSA Candidate Selector</h1>
+    </div>
+    
+    <div id="accordion">
+      <h3>First header</h3>
+      <div>First content panel</div>
+      <h3>Second header</h3>
+      <div>Second content panel</div>
+    </div>
+
+    <script language="javascript">
+        $(function() {
+            $('#selector').pagination({
+                items: 30,
+                itemsOnPage: 2,
+                cssStyle: 'daily-theme',
+                currentPage: 1,
+                onPageClick: function(pageNumber){test(pageNumber)},
+                onInit: function(){pageOne()},
+            });
+        });
+    </script>
+</body>
+</html>
