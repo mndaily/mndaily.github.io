@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <head>
+        <meta charset="utf-8">
+        <title>Housing</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>        
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
+    <script src="halls.json"></script>    
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+    </style>
+    </head>
+<body>
+
+<div id='map'></div>
+<script type='text/javascript'>
+
+
+    L.mapbox.accessToken = 'pk.eyJ1IjoiZXRoYW5uZWxzIiwiYSI6ImNpaHIwM21qNDAwMGR0ZmtoYjhlYWdlemQifQ.br2ZSDe6ODI4u1ECXefhgw';
+
+    var map = L.mapbox.map('map', 'mapbox.light')
+        .setView([44.977997, -93.221947], 15);
+
+    var info = L.control();
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>University Housing</h4>' +  (props ?
+            '<b>' + props.name + '<br></b>Year Built: ' + props.year_built
+            : 'Hover over a building');
+    };
+
+info.addTo(map);        
+
+    function style(feature) {
+      return {
+        color: "#669999",
+        weight: 3,
+        opacity: 0,
+        fillOpacity: 1,
+        fillColor: "#669999"
+        };
+    }
+    function highlightFeature(d) {
+            var layer = d.target;
+
+            layer.setStyle( {
+                color: '#669999', 
+                weight: 1,
+                opacity: 0.6,
+                fillColor: '#141f1f'
+            });
+
+            info.update(layer.feature.properties);
+        }
+
+        var geojson;
+
+        function resetHighlight(d) {
+            geojson.resetStyle(d.target);
+            info.update();
+        }
+
+        function zoomToFeature(d) {
+            map.fitBounds(d.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+            //    click: zoomToFeature
+            });
+        }
+
+        map.featureLayer.on('mouseover', function(e) {
+            e.layer.openPopup();
+        });
+        map.featureLayer.on('mouseout', function(e) {
+            e.layer.closePopup();
+        });
+
+    var geojson;
+
+    geojson = L.geoJson(halls, {
+                        onEachFeature: onEachFeature,
+                        style: style,
+                    }).addTo(map);
+</script>
+</body> 
+</html>
