@@ -1,140 +1,76 @@
 <html>
 
 <head>
-    <title>Candidate Picker</title>
-    <style type="text/css">
-        body {
-            background:#FFFFFF;
-            font-size:16px;
-            font-weight: bold;
-            font-family: 'Lora', serif;
-            line-height:1.2em;
-            color:#222222;
-        }
-        pre {
-            font-family:Consolas, Courier;
-            font-size: 12px;
-            color:#444444;
-            line-height:12px;
-            margin-left:30px;
-            margin-top:-28px;
-        }
-        li
-        {
-            list-style:none;
-        }
-        .header h1 {
-            text-align: center;
-            padding-top: 18px;
-            font-family: 'Lora', serif;     
-        }
-        .button {
-            margin-right: auto;
-            margin-left: auto;
-        }
-        .question {
-            padding:15px;
-            margin:10px;
-            border-style: solid;
-            border-color: #CCC;
-            opacity: .9;         
-        }
-        .weight {
-            padding:15px;
-            margin:10px;
-        }
-        .odd {
-            background:#9F9694;
-        }
-        .wrong {
-            border-left:#BA3D49 5px solid;
-            padding-left:10px;
-        }
-        .selection {
-            display: none;
-        }
-        .logo {
-            float: right;
-            position: relative;
-            z-index: 1000;
-            padding-right: 35px;
-        }
-        #selector {
-            margin-left: auto;
-            margin-right: auto;
-            width: 38%;
-        }
-        .btn {
-          font-family: Georgia;
-          color: #ffffff;
-          font-size: 20px;
-          background: #003E59;
-          padding: 10px 20px 10px 20px;
-          text-decoration: none;
-          margin-right: auto;
-          margin-left: 500px;
-          display: block;
-        }
-
-        .btn:hover {
-          background: #005980;
-          text-decoration: none;
-        }
-    </style>
+    <title>MSA Candidate Positions</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
-    <link type="text/css" rel="stylesheet" href="simplePagination/simplePagination.css"/>    
-    <script src="simplePagination/jquery.simplePagination.js"></script>
-    <script type="text/javascript">
-
-        var userAnswers = new Array;
-
-        function test(pageNumber)
-            {
-              var page = "#" + pageNumber;
-              var w = "#w" + pageNumber;
-              $('.question').hide()
-              $('.weight').hide()
-              $(page).show()
-              $(w).show()
-            }
-
-        function pageOne() {
-            var page_1 = "#1";
-            var w = "#w1";
-            $('.question').hide()
-            $('.weight').hide()
-            $(page_1).show()
-            $(w).show()
-        }                    
-    </script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
 
 </head>
 
 <body>
-    <div class="header"><img class="logo" id="p1" src="logo.png"></img>
-        <h1>MSA Candidate Selector</h1>
+    <div class="header"><a class="fade" href="http://www.mndaily.com"><img class="logo" id="p1" src="logo.png"></img></a>
+        <h1>Where MSA Candidates Stand</h1>
+        <p class="introduction">H</p><p>ere is some text telling you what to do and what this is and all sorts of things wow isn't this some good shit fuckin right bud lets go out for a rip lorem ipsum mea culpe caveat emptor lux aeterna senatus populusque romanus veni vidi vici gallia est omnis divisa in partes tres man i wish i knew more latin okay lets do the little prince now l'essentiel est invisible pour les yeux je ne peux pas jouer avec toi je ne suis pas apprivoise mais si tu m'apprivoise tu seras pour moi unique au monde apres mois le deluge mon cher marc je suis descendu ce matin chez mon medecin hermogene apres un assez long voyage en asie dans cette eglise le marechal vient a quelquechose j'ai oublier</p>
+        <p>Click on a topic to see the candidates' positions. Click <a href="about.html">here</a> to view their short bios.</p>
     </div>
     
     <div id="accordion">
-      <h3>First header</h3>
-      <div>First content panel</div>
-      <h3>Second header</h3>
-      <div>Second content panel</div>
+      <h3>Mental Health</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div>
+      <h3>Tuition/Costs</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div>
+      <h3>Sexual Assault</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div>
+      <h3>Diversity/Inclusion</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div>           
+      <h3>Sustainability</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div> 
+      <h3>Free Speech on Campus</h3>
+      <div>
+        <div class="platform" id="left">Abeer Syedah<p>ksdlahjklgh jklhgsdhg sadghksd</p></div><div class="platform" id="right">Cam Holl</div>
+        <br>
+        <br><br>
+      </div>                   
     </div>
 
-    <script language="javascript">
-        $(function() {
-            $('#selector').pagination({
-                items: 30,
-                itemsOnPage: 2,
-                cssStyle: 'daily-theme',
-                currentPage: 1,
-                onPageClick: function(pageNumber){test(pageNumber)},
-                onInit: function(){pageOne()},
-            });
+    <script>
+        $( "#accordion" ).accordion({
+          collapsible: true
         });
+
+        var collapsible = $( "#accordion" ).accordion( "option", "collapsible" );
+
+        $( "#accordion" ).accordion( "option", "collapsible", true );
+
+        $( "#accordion" ).accordion({
+          active: false
+        });
+
     </script>
+
 </body>
 </html>
