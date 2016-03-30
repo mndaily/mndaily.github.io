@@ -572,5 +572,14 @@ h3 {
 	padding-left: 30px;
 }
 .pic {
+	max-width: 25%;
+	max-height: 25%;
+}
+#abeer {
+	clear:none;
 	float:right;
+}
+#wrapper div {
+	clear: none;
+	float:left;
 }
