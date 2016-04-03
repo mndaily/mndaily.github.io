@@ -516,9 +516,11 @@ p.introduction:first-letter {
     position: relative;
     padding-right: 5px;
     float: right;
+    width: 50%;
 }
 #left {
     position: absolute;
+    width: 50%;
     left: 0px;
     float: left;
     padding-right: 10px;
