@@ -521,7 +521,7 @@ p.introduction:first-letter {
 #left {
     position: absolute;
     width: 50%;
-    left: 0px;
+    left: 10px;
     float: left;
     padding-right: 10px;
 }
