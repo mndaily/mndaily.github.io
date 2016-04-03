@@ -1,0 +1,70 @@
+body {
+    background: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Lora', serif;
+    line-height: 1.2em;
+    color: #222222;
+}
+
+li {
+    list-style: none;
+}
+
+.header h1 {
+    text-align: center;
+    padding-top: 18px;
+    font-family: 'Lora', serif;
+}
+
+.button {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.question {
+    padding: 15px;
+    margin: 10px;
+    border-style: solid;
+    border-color: #CCC;
+    opacity: .9;
+}
+
+.weight {
+    padding: 15px;
+    margin: 10px;
+}
+
+.selection {
+    display: none;
+}
+
+.logo {
+    float: right;
+    position: relative;
+    z-index: 1000;
+    padding-right: 35px;
+}
+
+#selector {
+    margin-left: auto;
+    margin-right: auto;
+    width: 38%;
+}
+
+.btn {
+    font-family: Georgia;
+    color: #ffffff;
+    font-size: 20px;
+    background: #003E59;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin-right: auto;
+    margin-left: 500px;
+    display: block;
+}
+
+.btn:hover {
+    background: #005980;
+    text-decoration: none;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Where they come from</title>
+	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+</head>
+<body>
+
+	<div id="chart"></div>
+
+	<script src="sankey.js"></script>
+
+	<script type="text/javascript">
+	
+	var margin = {top: 1, right: 1, bottom: 6, left: 1},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+
+	var svg = d3.select("#chart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var sankey = d3.sankey()
+	    .nodeWidth(15)
+	    .nodePadding(10)
+	    .size([width, height]);	    
