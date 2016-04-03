@@ -513,15 +513,13 @@ p.introduction:first-letter {
     font-family: 'Lora', serif;
 }
 #right {
-    position: absolute;
-    right: 25%;
+    position: relative;
     padding-right: 5px;
     float: right;
 }
 #left {
-    position: relative;
+    position: absolute;
     left: 0px;
-    height: 150px;
     float: left;
     padding-right: 10px;
 }
