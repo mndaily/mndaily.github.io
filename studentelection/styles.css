@@ -44,12 +44,12 @@
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
-.ui-accordion .ui-accordion-header { display: block; cursor: pointer; position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
+.ui-accordion .ui-accordion-header { display: block; /*cursor: pointer;*/ position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
 .ui-accordion .ui-accordion-icons { padding-left: 2.2em; }
 .ui-accordion .ui-accordion-noicons { padding-left: .7em; }
 .ui-accordion .ui-accordion-icons .ui-accordion-icons { padding-left: 2.2em; }
 .ui-accordion .ui-accordion-header .ui-accordion-header-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
-.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; overflow: auto; zoom: 1; }
+.ui-accordion .ui-accordion-content { padding: 12px; border-top: 0; overflow: auto; zoom: 1; height: 220px; }
 .ui-autocomplete {
 	position: absolute;
 	top: 0;
@@ -472,17 +472,8 @@ body {
     line-height:1.2em;
     color:#222222;
 }
-.header h1 {
-    text-align: center;
-    padding-top: 18px;
-    font-family: 'Lora', serif;     
-}
-.logo {
-    float: right;
-    position: relative;
-    z-index: -1;
-    padding-right: 35px;
-}
+
+
 #accordion {
     clear: both;
 }
@@ -503,6 +494,11 @@ p.introduction:first-letter {
    transition: opacity .25s ease-in-out;
    -moz-transition: opacity .25s ease-in-out;
    -webkit-transition: opacity .25s ease-in-out;
+    float: right;
+    clear:both;
+    position: relative;
+/*    z-index: -1;
+*/    padding-right: 35px;   
    }
 #fade:hover {
     opacity: 0.5;
@@ -514,22 +510,32 @@ p.introduction:first-letter {
 }        
 .platform {
     clear:both;
-    font-family: 'Lora', serif;            
+    font-family: 'Lora', serif;
 }
 #right {
-    position: absolute;
-    right: 0px;
-    width: 698px;
-    padding: 10px;            
+    position: relative;
+    padding-right: 5px;
+    float: right;
+    width: 50%;
 }
 #left {
     position: absolute;
-    left: 0px;
-    width: 698px;
-    padding: 10px;
+    width: 50%;
+    left: 10px;
+    float: left;
+    padding-right: 10px;
 }
 .platform p {
     font-size: small;
+}
+ul{
+    list-style-type: none;
+}
+li:before {
+    content: "\00B7";
+    color: red;
+    font-weight: bold;
+    font-size: 22px;
 }
 
 a {
@@ -550,39 +556,41 @@ a:hover, a:focus {
 a:active {
     color: gray;
 }
-h3 {
-	padding-left: 30px;
+
+
+#wrapper  {
+	width: 1300px;
+	height: 600px;
 }
+
 .pic {
 	float: right;
 	width: 200px;
 	height: 200px;
+	padding-left: 12px;
 }
 #abeer {
-    position: relative;
-    left: 0px;
-    width: 40%;
-    padding-right: 156px; 
+  float: left;
+  width: 500px;
+  height: 200px;
+  margin-bottom: 75px;
 }
-#sam {
-    position: relative;
-    left: 0px;
-    width: 40%;
-    padding-right: 156px; 
-}
+
 #cam {
-	position: absolute;
-    right: 0px;
-    width: 40%;
-    padding-right: 180px;
+  float: right;
+  width: 500px;
+  height: 200px;
+  margin-bottom: 75px;
 }
+
+#sam {
+  float: left;
+  width: 500px;
+  height: 200px;
+}
+
 #nidhi {
-	position: absolute;
-    right: 0px;
-    width: 40%;
-    padding-right: 180px;
-    clear: both;
-}
-#wrapper div {
-	float:left;
+  float: right;
+  width: 500px;
+  height: 200px;
 }

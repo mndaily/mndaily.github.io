@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+	<style>
+
+	</style>
+
+	<title>Heroin Seizures</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px; width:600px;"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+	bindto: "#chart",
+	data: {
+		x: "x",
+		columns: [
+			["x", 2011, 2012, 2013, 2014, 2015],
+			["Heroin (in lbs)", 8, 6, 19, 12, 18],
+			
+		],
+	type: "bar"
+	},
+	    color: {
+        pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c']
+    },
+	axis: {
+		x: {		
+			label: ""
+		},
+		y: {
+			label: ""
+		}
+	},
+	bar: {
+		width: {
+			ratio: 0.3
+		}
+	}
+});
+d3.select("svg").append("text")
+    .attr("x", 300 )
+    .attr("y", 15)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Heroin Seizures in Minnesota (in lbs)");
+d3.select("svg").append("text")
+    .attr("x", 300 )
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("By Violent Crime Enforcement Team");    
+</script>
