@@ -528,6 +528,9 @@ p.introduction:first-letter {
 .platform p {
     font-size: small;
 }
+#accordion h3 {
+	text-align: center;
+}
 ul{
     list-style-type: none;
 }
