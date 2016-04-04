@@ -498,13 +498,13 @@ p.introduction:first-letter {
      padding-right: 3px;
      font-family: Times, serif, Georgia;
 }
-.fade {
+#fade {
    opacity: 1;
    transition: opacity .25s ease-in-out;
    -moz-transition: opacity .25s ease-in-out;
    -webkit-transition: opacity .25s ease-in-out;
    }
-.fade:hover {
+#fade:hover {
     opacity: 0.5;
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
