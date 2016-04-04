@@ -468,7 +468,6 @@ body {
     background:#FFFFFF;
     font-size:16px;
     font-weight: bold;
-    width: 75%;
     font-family: 'Lora', serif;
     line-height:1.2em;
     color:#222222;
@@ -514,22 +513,23 @@ p.introduction:first-letter {
     font-family: 'Lora', serif;
 }
 #right {
-    position: absolute;
-    right: 25%;
-    width: 530px;
+    position: relative;
     padding-right: 5px;
     float: right;
+    width: 50%;
 }
 #left {
-    position: relative;
-    left: 0px;
-    width: 530px;
-    height: 150px;
+    position: absolute;
+    width: 50%;
+    left: 10px;
     float: left;
     padding-right: 10px;
 }
 .platform p {
     font-size: small;
+}
+#accordion h3 {
+	text-align: center;
 }
 ul{
     list-style-type: none;
@@ -565,7 +565,6 @@ a:active {
 	width: 1300px;
 	height: 600px;
 }
-
 .pic {
 	float: right;
 	width: 200px;
@@ -573,27 +572,20 @@ a:active {
 	padding-left: 12px;
 }
 #abeer {
-  float: left;
   width: 500px;
-  height: 200px;
+  height: 245px;
   margin-bottom: 75px;
 }
-
 #cam {
-  float: right;
   width: 500px;
-  height: 200px;
+  height: 245px;
   margin-bottom: 75px;
 }
-
 #sam {
-  float: left;
   width: 500px;
-  height: 200px;
+  height: 245px;
 }
-
 #nidhi {
-  float: right;
   width: 500px;
-  height: 200px;
+  height: 245px;
 }
