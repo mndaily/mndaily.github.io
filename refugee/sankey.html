@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Where They Come From</title>
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <style>
 
 .node rect {
   cursor: move;
   fill-opacity: .9;
   shape-rendering: crispEdges;
+  fill: #a9aca8;
 }
 
 .node text {
   pointer-events: none;
-  text-shadow: 0 1px 0 #fff;
 }
 
 .link {
   fill: none;
-  stroke: #000;
+  stroke: steelblue;
   stroke-opacity: .2;
 }
 
 .link:hover {
   stroke-opacity: .5;
+}
+body {
+  font-family: "Oswald", sans-serif;
 }
 
 </style>
@@ -31,11 +35,12 @@
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="Sankey1.js"></script>
+<script src="colorbrewer.js"></script>
 <script>
   
 var units = "people";
 
-var margin = {top: 10, right: 10, bottom: 10, left: 10},
+var margin = {top: 43, right: 10, bottom: 10, left: 10},
     width = 1300 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 
@@ -108,7 +113,9 @@ d3.csv("sankey.csv", function(error, data) {
   link.append("title")
         .text(function(d) {
         return d.source.name + " → " + 
-                d.target.name + " county" + "\n" + format(d.value); });
+                d.target.name + " county" + "\n" + format(d.value); })
+        .style("font-family", "Oswald, sans-serif");
+
 
 // add in the nodes
   var node = svg.append("g").selectAll(".node")
@@ -145,7 +152,8 @@ d3.csv("sankey.csv", function(error, data) {
       .text(function(d) { return d.name; })
     .filter(function(d) { return d.x < width / 2; })
       .attr("x", 6 + sankey.nodeWidth())
-      .attr("text-anchor", "start");
+      .attr("text-anchor", "start")
+      .style("font-family", "Oswald, sans-serif");
 
 // the function for moving the nodes
   function dragmove(d) {
@@ -157,6 +165,18 @@ d3.csv("sankey.csv", function(error, data) {
     link.attr("d", path);
   }
 });
+
+  d3.select("svg")
+    .append("text")
+    .attr("class", "title")
+    .attr("y", 38)
+    .attr("x", width/2)
+  .style("text-anchor", "middle")
+  .style("font-family", "Oswald, sans-serif")
+    .style("font-size", "xx-large")
+  .style("font-weight", "600")
+  .style("padding-left", "21px")
+    .text("Minnesotan Refugees Initial Settlement County");
 
 </script>
 
