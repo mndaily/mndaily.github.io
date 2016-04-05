@@ -4,17 +4,19 @@
 	<meta charset="UTF-8">
 	<title>Refugees in Minnesota</title>
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 			div.tooltip {	
 			    position: absolute;			
 			    text-align: center;			
 			    padding: 9px;				
 			    font: 12px sans-serif;		
-			    background: slategray;	
+			    background: #E0E0E0;	
 			    border: 0px;		
 			    border-radius: 8px;			
-			    pointer-events: none;			
-			}		
+			    pointer-events: none;
+			    opacity: .1;			
+			}
 	</style>		
 </head>
 <body>
@@ -23,8 +25,8 @@
 		var h = 800;
 
 		//Define map projection
-		var projection = d3.geo.mercator()
-							   .translate([w/2, h/2 + 150])
+		var projection = d3.geo.equirectangular()
+							   .translate([w/2, h/2 - 30])
 							   .scale([200]);
 
 		//Define path generator
@@ -33,7 +35,7 @@
 						 
 		//Define quantize scale to sort data values into buckets of color
 		var color = d3.scale.quantize()
-							.range(["rgb(230, 255, 230)","rgb(179, 255, 179)","rgb(128, 255, 128)","rgb(77, 255, 77)","rgb(0, 255, 0)", "rgb(0, 153, 0)", "rgb(0, 102, 0)", "rgb(0, 51, 0)"]);
+							.range(["rgb(204,229,255)","rgb(153,204,255)","rgb(102,178,255)","rgb(51,153,255)","rgb(0,128,255)", "rgb(0,102,204)", "rgb(0, 76, 153)", "rgb(0, 51, 102)","rgb(0,25,51)"]);
 
 		var div = d3.select("body").append("div")	
 			    .attr("class", "tooltip")				
@@ -84,7 +86,7 @@
 				   .enter()
 				   .append("path")
 				   .attr("d", path)
-				   .style("stroke", "grey")
+				   // .style("stroke", "grey")
 				   .style("fill-opacity", .7)
 				   .style("fill", function(d) {
 				   		//Get data value
@@ -111,7 +113,7 @@
 					   	d3.select(this).style("fill-opacity", 1)
 					   	div.transition()
 					   		.duration(100)
-					   		.style("opacity", .9);
+					   		.style("opacity", .8);
 					   	div .html("Refugees from " + d.properties.name + " since 1979: " + over())					
 			                .style("left", (d3.event.pageX) + "px")		
 			                .style("top", (d3.event.pageY - 28) + "px");					   	
@@ -127,6 +129,17 @@
 
 		});
 	});
+      		d3.select("svg")
+      			.append("text")
+      			.attr("class", "title")
+      			.attr("y", 38)
+      			.attr("x", w/2)
+    			.style("text-anchor", "middle")
+    			.style("font-family", "Oswald, sans-serif")
+      			.style("font-size", "xx-large")
+    			.style("font-weight", "600")
+    			.style("padding-left", "21px")
+      			.text("Minnesotan Refugees Place of Origin Since 1979");
 
 
 	</script>
