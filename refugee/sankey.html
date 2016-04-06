@@ -3,7 +3,17 @@
 <title>Where They Come From</title>
   <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <style>
-
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    padding: 9px;       
+    font: 12px sans-serif;    
+    background: #E0E0E0;  
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;
+    opacity: .1;      
+}
 .node rect {
   cursor: move;
   fill-opacity: .9;
@@ -37,9 +47,9 @@ body {
 <script src="Sankey1.js"></script>
 <script>
   
-var units = "people";
+var units = "refugee(s)";
 
-var margin = {top: 43, right: 10, bottom: 10, left: 10},
+var margin = {top: 55, right: 10, bottom: 10, left: 10},
     width = 1300 - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 
@@ -54,6 +64,11 @@ var svg = d3.select("#chart").append("svg")
   .append("g")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
+
+var div = d3.select("body").append("div") 
+      .attr("class", "tooltip")       
+      .style("opacity", 1);
+
 
 // Set the sankey diagram properties
 var sankey = d3.sankey()
@@ -106,15 +121,29 @@ d3.csv("sankey.csv", function(error, data) {
       .attr("class", "link")
       .attr("d", path)
       .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-      .sort(function(a, b) { return b.dy - a.dy; });
-
-// add the link titles
-  link.append("title")
-        .text(function(d) {
-        return d.source.name + " → " + 
-                d.target.name + " county" + "\n" + format(d.value); })
-        .style("font-family", "Oswald, sans-serif");
-
+      .sort(function(a, b) { return b.dy - a.dy; })
+      .on("mousemove", function(d, i) {
+          var currentCountry = this;
+          function over() {
+              return d.value;
+          }
+          d3.select(this).style("fill-opacity", 1)
+          div.transition()
+            .duration(50)
+            .style("opacity", .8);
+          div .html("Refugees from " + d.source.name + " to " + d.target.name + " County since 1979: " + over())
+                  .style("left", (d3.event.pageX) + "px")   
+                  .style("top", (d3.event.pageY - 28) + "px")
+                  .style("font-family", "Oswald, sans-serif");             
+         })
+         .on("mouseout", function(d, i) {
+            var currentCountry = this;
+            d3.select(this).style("fill-opacity", .7)
+            div.transition()
+               .delay(50)
+               .duration(200)
+               .style("opacity", 0)
+            });
 
 // add in the nodes
   var node = svg.append("g").selectAll(".node")
