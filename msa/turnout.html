@@ -2,30 +2,46 @@
 <head>
 	<title>Voter Turnout</title>
 	<style>
-
+		#container {
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#msa {
+			float:left;
+			z-index: -1;
+		}
+		#gapsa {
+			float:right;
+			z-index: -1;
+		}
+		.c3-bar {
+			opacity: .8 !important;
+			}
 	</style>
 	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
 
-  <link href="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
-<div id="chart" style="height:410px;"></div>
+	<div id="#container" style="width:75%">
+		<div id="msa" style="height:410px;"></div>
+		<div id="gapsa" style="height:410px;"></div>
+	</div>
 </body>
 <script>
 
 var chart = c3.generate({
-	bindto: "#chart",
+	bindto: "#msa",
 	data: {
 		x: "x",
 		columns:[ 
 			   ["x", 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016],
-			   ["Percentage",9.8,6.8,3.3,14.3,14.9,15.4,11.3,20.4,19.4],
+			   ["Percentage",10.5,9.8,6.8,3.3,14.3,14.9,15.4,11.3,20.4,19.4],
 			],
 	type: "bar"
 	},
@@ -38,10 +54,10 @@ var chart = c3.generate({
 		}
 	},
 	size: {
-		width: 600
+		width: 500
 	},
 	color: {
-		pattern: ["lightsteelblue"]
+		pattern: ["#CA3333"]
 	},
 	bar: {
 		width: {
@@ -49,17 +65,60 @@ var chart = c3.generate({
 		}
 	}
 });
-d3.select("svg").append("text")
-    .attr("x", 300 )
-    .attr("y", 30)
+var chart = c3.generate({
+	bindto: "#gapsa",
+	data: {
+		x: "x",
+		columns:[ 
+			   ["x", 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
+			   ["Percentage",4.1,7,1.3,4.7,10.2,2.7,6.4,11.6,],
+			],
+	type: "bar"
+	},
+	axis: {
+		x: {		
+			label: "Year"
+		},
+		y: {
+			label: "Percentage"
+		}
+	},
+	size: {
+		width: 500
+	},
+	color: {
+		pattern: ["#B9C5CB"]
+	},
+	bar: {
+		width: {
+			ratio: 0.5
+		}
+	}
+});
+d3.select("#msa svg").append("text")
+	.attr('x', d3.select('#msa svg').node().getBoundingClientRect().width / 2)        
+	.attr("y", 30)
     .style("text-anchor", "middle")
     .style("font-size", "large")
     .style("font-family", "Oswald")
     .text("MSA Voter turnout");
-d3.select("svg").append("text")
-    .attr("x", 300 )
+d3.select("#msa svg").append("text")
+	.attr('x', d3.select('#gapsa svg').node().getBoundingClientRect().width / 2)    
+	.attr("y", 45)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: All Campus Elections Commission");
+d3.select("#gapsa svg").append("text")
+	.attr('x', d3.select('#gapsa svg').node().getBoundingClientRect().width / 2)    
+	.attr("y", 30)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .style("font-family", "Oswald")
+    .text("GAPSA Voter turnout");
+d3.select("#gapsa svg").append("text")
+    .attr('x', d3.select('#gapsa svg').node().getBoundingClientRect().width / 2)
     .attr("y", 45)
     .style("text-anchor", "middle")
     .style("font-size", "x-small")
-    .text("Source: All Campus Elections Commission");    
+    .text("Source: All Campus Elections Commission");   
 </script>
