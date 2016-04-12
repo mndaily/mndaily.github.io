@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<head>
+	<style>
+		#container {
+			text-align: center;			
+		}
+		#note {
+		  display: none; 
+		  font color: gray; 
+		  font-size: small; 
+		  opacity: .6;
+		}
+		#note2 {
+		  font color: gray; 
+		  font-size: small; 
+		  opacity: .6;
+		}
+		#source { 
+		  font color: gray; 
+		  font-size: small; 
+		  opacity: .6;
+		}
+		.c3-chart-arcs-title {
+			font-weight: bold;
+		}
+	</style>
+
+</head>
+
+	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<body>
+
+	<div id="container">
+		<div id="startups"></div>
+		<br>
+		<div id="timeline"></div>
+		
+		<div id="source">Source: Office of Vice President for Research</div>
+
+	</div>
+<script>
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+
+	var x0 = d3.scale.ordinal()
+	    .rangeRoundBands([0, width], .1);
+
+	var x1 = d3.scale.ordinal();
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var color = d3.scale.ordinal()
+	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x0)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .tickFormat(d3.format(".2s"));
+
+	var svg = d3.select("body").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", 600 + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	d3.csv("startups.csv", function(error, data) {
+	  if (error) throw error;
+
+	  var colleges = d3.keys(data[0]).filter(function(key) { return key !== "college"; });
+
+	  data.forEach(function(d) {
+	    d.years = colleges.map(function(name) { return {name: name, value: +d[name]}; });
+	  });
+
+	  x0.domain(data.map(function(d) { return d.college; }));
+	  x1.domain(colleges).rangeRoundBands([0, x0.rangeBand()]);
+	  y.domain([0, d3.max(data, function(d) { return d3.max(d.years, function(d) { return d.value; }); })]);
+
+	  svg.append("g")
+	      .attr("class", "xaxis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+        svg.selectAll(".xaxis text")  // select all the text elements for the xaxis
+          .attr("transform", "rotate(-90)");	      
+
+	  svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis)
+	    .append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Population");
+
+	  var state = svg.selectAll(".state")
+	      .data(data)
+	    .enter().append("g")
+	      .attr("class", "state")
+	      .attr("transform", function(d) { return "translate(" + x0(d.college) + ",0)"; });
+
+	  state.selectAll("rect")
+	      .data(function(d) { return d.years; })
+	    .enter().append("rect")
+	      .attr("width", x1.rangeBand())
+	      .attr("x", function(d) { return x1(d.name); })
+	      .attr("y", function(d) { return y(d.value); })
+	      .attr("height", function(d) { return height - y(d.value); })
+	      .style("fill", function(d) { return color(d.name); });
+
+	  var legend = svg.selectAll(".legend")
+	      .data(colleges.slice().reverse())
+	    .enter().append("g")
+	      .attr("class", "legend")
+	      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+	  legend.append("rect")
+	      .attr("x", width - 18)
+	      .attr("width", 18)
+	      .attr("height", 18)
+	      .style("fill", color);
+
+	  legend.append("text")
+	      .attr("x", width - 24)
+	      .attr("y", 9)
+	      .attr("dy", ".35em")
+	      .style("text-anchor", "end")
+	      .text(function(d) { return d; });
+
+	});
+
+
+// var chart = c3.generate({
+// 	bindto: "#startups",
+// 	size: { width: 400, height: 400},
+// 	data: {
+// 		columns: [
+// 			["Male", 30],
+// 			["Female", 3],
+// 			["Female-Male Team", 2],
+// 			["Female Team", 1],
+// 			["Male Team", 7],
+// 			["N/A", 3]
+// 		],
+// 		type: "bar"
+// 	},
+// 	tooltip: {
+// 		grouped: false
+// 	},
+// 	donut: {
+// 		title: "Startups" 
+// 	}
+// });
+
+// var chart1 = c3.generate({
+// 	bindto: "#timeline",
+// 	size: { width: 400, height: 400},
+// 	data: {
+// 		x: "x",
+// 		columns: [
+			// ["x", 2013, 2014, 2015],
+			// ["CBS",0,0,1],
+			// ["CBS and College of Pharmacy",0,0,1],
+			// ["CEHD",0,0,4],
+			// ["Center for Magnetic Resonance Research and School of Dentistry",0,1,0],
+			// ["Center for Sustainable Building Research",0,1,0],
+			// ["CFANS",1,1,1],
+			// ["College of Pharmacy",0,1,2],
+			// ["College of Veterinary Medicine",1,0,1],
+			// ["CSE",6,5,3],
+			// ["CSE and CBS",0,1,0],
+			// ["CSE and Center for Magnetic Resonance Research",0,1,0],
+			// ["Medical School",5,3,0],
+			// ["U of M Physicians",0,0,1]
+// 		],
+// 	type: "bar"
+// 	},
+// 	axis: {
+// 		x: {		
+// 			label: "Year"
+// 		},
+// 		y: {
+// 			label: "Number"
+// 		}
+// 	},
+// 	tooltip: {
+// 		grouped: false
+// 	},	
+// 	bar: {
+// 		width: {
+// 			ratio: 0.5
+// 		}
+// 	}
+// });
+
+</script>
+</body>
+
+</html>
