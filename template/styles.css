@@ -1,0 +1,69 @@
+/*Fonts*/
+@font-face{
+    font-family:"Lora";
+    src:url("https://fonts.googleapis.com/css?family=Lora");
+    src:url("http://apps.startribune.com/fonts/Benton-Sans-Regular/c80c8df9-343a-4ee8-a64b-6213022724fd-2.eot?") format("embedded-opentype"),
+    font-style:normal;
+    font-weight:normal
+}
+
+/*Links*/
+a {
+    transition: all 0.2s linear;
+    color: black;
+    font-weight: 300;
+    text-decoration: none;                
+}
+/* visited link */
+a:visited {
+    color: black;
+}
+/* mouse over link */
+a:hover, a:focus {
+    color: #999999;
+}
+/* selected link */
+a:active {
+    color: gray;
+}
+
+/*Drop cap*/
+p {
+    margin-left: 30px;
+}
+p.intro:first-letter {
+     font-size: 44px;
+     float: left; 
+     color: #999999;
+     line-height: 35px;
+     padding-top: 3px; 
+     padding-right: 3px;
+     font-family: Times, serif, Georgia;
+}
+
+#fade {
+   opacity: 1;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+    float: right;
+    clear:both;
+    position: relative;
+    padding-right: 35px;   
+   }
+#fade:hover {
+    opacity: 0.5;t8k7tr5
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%); 
+}
+
+/*jQuery accordion*/
+.ui-accordion .ui-accordion-header { display: block; /*cursor: pointer;*/ position: relative; margin-top: 2px; padding: .5em .5em .5em .7em; zoom: 1; }
+.ui-accordion .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-noicons { padding-left: .7em; }
+.ui-accordion .ui-accordion-icons .ui-accordion-icons { padding-left: 2.2em; }
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ui-accordion .ui-accordion-content { padding: 12px; border-top: 0; overflow: auto; zoom: 1; height: 220px; }
