@@ -1,15 +1,5 @@
-/*Fonts*/
-@font-face{
-    font-family:"Lora";
-    src:url("https://fonts.googleapis.com/css?family=Lora");
-    font-style:normal;
-    font-weight:normal
-}
-@font-face{
-    font-family:"Lora";
-    src:url("https://fonts.googleapis.com/css?family=Lora");
-    font-style:italic;
-    font-weight:normal
+h3 {
+    font-family: "Lora";
 }
 
 /*Links*/

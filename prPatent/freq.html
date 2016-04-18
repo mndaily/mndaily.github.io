@@ -2,40 +2,16 @@
 <head>
 	<title>Housing</title>
 	<style>
-		#button {
-		  -webkit-border-radius: 0;
-		  -moz-border-radius: 0;
-		  border-radius: 0px;
-		  font-family: Arial;
-		  color: #ffffff;
-		  font-size: 14px;
-		  background: #3498db;
-		  padding: 10px 20px 10px 20px;
-		  text-decoration: none;
-		}
-
-		#button:hover {
-		  background: #3cb0fd;
-		  text-decoration: none;
-		}
-		#note {
-		  display: none; 
-		  font color: gray; 
-		  font-size: small; 
-		  opacity: .6;
-		}
-		#note2 {
-		  font color: gray; 
-		  font-size: small; 
-		  opacity: .6;
-		}
 		#source { 
 		  font color: gray; 
 		  font-size: small; 
 		  opacity: .6;
 		}
-		.c3-chart-arcs-title {
+		 .c3-chart-arcs-title {
 			font-weight: bold;
+		}
+		.c3-event-rects-multiple {
+			opacity: 1;
 		}
 	</style>
 
@@ -65,17 +41,23 @@ var chart = c3.generate({
 		type: "scatter"
 	},
 	legend: {
-		hide:false
+		hide: true
 	},
 	axis: {
 		x: {
 			type: "timeseries",
 			tick: { 
-				format:"%m/%d/%Y"
+				format:"%m/%d/%Y",
+				count: 12
 			}
 		}
 	}
 });
+
+d3.selectAll("c3-event-rects")
+	.style("opacity", 1);
+
+chart.hide([""], {withLegend: true});
 
 </script>
 </html>
