@@ -62,6 +62,12 @@ d3.select("#chart svg").append("text")
     .style("font-size", "large")
     .style("font-family", "Oswald")
     .text("Median Monthly Rent");
+d3.select("#chart svg").append("text")
+	.attr('x', d3.select('#chart svg').node().getBoundingClientRect().width / 2)    
+	.attr("y", 45)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: MN Daily Reporting");    
 
 </script>
 </html>
