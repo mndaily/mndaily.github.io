@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+	<style>
+
+	</style>
+
+	<title>Pedestrian Data</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px; width:1000px;"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+    data: {
+        x:'x',
+        columns: [
+            ['x',2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+            ['Pedestrian Crashes',938,915,957,860,883,808,857,878,868,818],
+            ['Pedestrians Injured', 936,906,975,867,880,824,859,874,867,837],
+            ['Pedestrians Killed', 44,38,33,25,41,36,40,40,35,17]
+        ],
+        type: 'bar'
+    },
+    color: {
+        pattern: ["#003E59","#CA3333","#000000"]
+    },
+    bar: {
+        width: {
+            ratio: 0.5 // this makes bar width 50% of length between ticks
+        }
+        // or
+        //width: 100 // this makes bar width 100px
+    }
+});
+
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Pedestrian Crashes 2005-2014");
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 35)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: Department of Public Safety, Office of Traffic Safety");    
+</script>
