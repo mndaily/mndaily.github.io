@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+	<style>
+
+	</style>
+
+	<title>Traffic Crashes and People Injured</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px; width:1000px;"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+    data: {
+    	x: 'x',
+        columns: [
+        ['x', 1965,1970,1975,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+            ['Total Crashes', 83239, 99404, 123206,103612,97879,89443,97371,93741,99168,95460,94095,102094,105996,99236,101419,96808,100907,99701,96022,105332,98625,92926,96813,103591,98984,94969,91274,87813,78745,81505,79095,73498,74073,72117,69236,77707,78396],
+            ['Persons Injured', 50847,38538,41931,45227,43739,38692,41086,41808,44316,42130,42091,44415,45404,44634,42748,43249,44987,46403,47161,48963,46064,45115,44538, 44740,42223,40677,40073,37686,35025,35318,33379,31074,31176,30295,29314,30653,29439]
+        ]
+    },
+    color: { 
+        pattern: ["#003E59","#ca3333"]
+    }
+});
+
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 30)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Traffic Safety Data 1965-2014");
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 40)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: Department of Public Safety, Office of Traffic Safety");    
+</script>
