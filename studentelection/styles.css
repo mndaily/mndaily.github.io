@@ -497,8 +497,7 @@ p.introduction:first-letter {
     float: right;
     clear:both;
     position: relative;
-/*    z-index: -1;
-*/    padding-right: 35px;   
+    padding-right: 35px;   
    }
 #fade:hover {
     opacity: 0.5;
