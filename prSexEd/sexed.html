@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Sex Ed</title>
+		<script type="text/javascript"	src="http://d3js.org/d3.v3.min.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+		<script src="colorbrewer.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.10.0/d3-legend.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+		<style type="text/css">
+			path {
+				-moz-transition: all 0.15s;
+        		-o-transition: all 0.15s;
+        		-webkit-transition: all 0.15s;
+        		transition: all 0.15s;
+		        opacity: .7;
+		    }
+		    path:hover {
+		        opacity: 1;
+		    }
+			.legend {
+			    font-size: 12px;
+			  }
+			  rect {
+			    stroke-width: 2;
+			  }
+			.title {
+				font-size: 32;
+				font-family: 'Oswald', sans-serif;
+			}
+		    .hidden {
+		        display: none;
+		    }			
+			div.tooltip {	
+			    position: absolute;			
+			    text-align: center;			
+			    padding: 9px;				
+			    font: 12px sans-serif;		
+			    background: #E0E0E0;	
+			    border: 0px;		
+			    border-radius: 8px;			
+			    pointer-events: none;
+			    opacity: 1;
+			    z-index: 10000;	
+			}
+			#option {
+			padding-left: 150px;
+			}
+			.button {
+			  font-family: "Oswald";
+			  color: #000000;
+			  font-size: 13px;
+			  background: #ffffff;
+			  padding: 10px 20px 10px 20px;
+			  border: solid #000000 1px;
+			  text-decoration: none;
+			  clear: both;
+			}
+
+			.button:hover {
+			  background: #545454;
+			  text-decoration: none;
+			  color: #ffffff;
+			}
+			.button:active {
+			  background: #545454;
+			  text-decoration: none;
+			  color: #ffffff;				
+			}
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+
+			//Width and height
+			var w = 1200,
+				h = 610;
+
+			//Define map projection
+			var projection = d3.geo.albersUsa()
+								   .translate([w/2, h/2])
+								   .scale([1200]);
+
+			//Define path generator
+			var path = d3.geo.path()
+							 .projection(projection);
+							 
+			//Define quantize scale to sort data values into buckets of color
+			var colorScale = d3.scale.linear()
+					.domain([0, 100])
+			        .range(colorbrewer.Set1[3]);		
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			var div = d3.select("body").append("div")
+			    .attr("class", "tooltip")		
+			    .style("opacity", 1);	
+
+			d3.select("svg").append("text")
+			.attr('x', w/2)        
+			.attr("y", 30)
+		    .style("text-anchor", "middle")
+		    .style("font-size", "xx-large")
+		    .style("font-family", "Oswald")
+		    .style("z-index", 100000)
+		    .text("Sex Education in the U.S.");   						
+
+			d3.csv("abstinencemiddle.csv", function(data) {
+
+				//Load in GeoJSON data
+				d3.json("us-states.json", function(json) {
+
+					for (var i = 0; i < data.length; i++) {
+				
+						//Grab state name
+						var dataState = data[i].States;
+						
+						//Grab data value, and convert from string to float
+						var dataValue = parseFloat(data[i].value);
+				
+						//Find the corresponding state inside the GeoJSON
+						for (var j = 0; j < json.features.length; j++) {
+						
+							var jsonState = json.features[j].properties.name;
+			
+							if (dataState == jsonState) {
+						
+								//Copy the data value into the JSON
+								json.features[j].properties.value = dataValue;
+								
+								//Stop looking through the JSON
+								break;
+								
+							}
+						}		
+					}			
+
+					//Bind data and create one path per GeoJSON feature
+					svg.selectAll("path")
+					   .data(json.features)
+					   .enter()
+					   .append("path")
+					   .attr("d", path)
+					   .style("stroke", "#FFF")
+					   .style("stroke-width", 1)
+					   .style("fill", function(d) {
+					   		//Get data value
+					   		var value = d.properties.value;
+					   		
+					   		if (value) {
+					   			//If value exists…
+						   		return colorScale(value);
+					   		} else {
+					   			//If value is undefined…
+						   		return "#ccc";
+					   		}
+					   })
+					.on("mousemove", function(d, i) {
+					   	var currentState = this;
+					   	function over() {
+					   		if (d.properties.value == undefined) {
+					   			return "Numbers not reported";
+					   		}
+					   		else {
+					   			return d.properties.value + "%";
+					   		}
+					   	}
+					   	d3.select(this).style("opacity", 1)
+					   	div.transition()
+					   		.style("opacity", 1)
+					   		.duration(100)
+					   	div .html("Students in " + d.properties.name + " grade 6-8 taught benefits of abstinence: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");
+			           	// console.log(d.properties.value);
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(100)
+						   	   .style("opacity", 0)
+						   	});
+
+			});
+		});
+
+	function abstinenceHigh() {
+
+	  	d3.select("svg")
+	  		.selectAll("path")
+	  		.remove();
+
+		d3.csv("abstinencehigh.csv", function(data) {
+
+			var colorScale = d3.scale.linear()
+					.domain([0, 100])
+			        .range(colorbrewer.Set1[3]);
+
+			d3.json("us-states.json", function(json) {
+
+								for (var i = 0; i < data.length; i++) {
+							
+									//Grab state name
+									var dataState = data[i].States;
+									
+									//Grab data value, and convert from string to float
+									var dataValue = parseFloat(data[i].value);
+							
+									//Find the corresponding state inside the GeoJSON
+									for (var j = 0; j < json.features.length; j++) {
+									
+										var jsonState = json.features[j].properties.name;
+							
+										if (dataState == jsonState) {
+									
+											//Copy the data value into the JSON
+											json.features[j].properties.value = dataValue;
+											
+											//Stop looking through the JSON
+											break;
+											
+										}
+									}
+								}
+
+	  	var appending = svg.selectAll("svg")
+	  		.data(json.features);
+
+	  		appending.enter().append("path")
+
+	  		.style("fill", function(d) {
+		   		var value = d.properties.value;
+			   		if (value) {
+			   			//If value exists…
+				   		return colorScale(value);
+			   		} else {
+			   			//If value is undefined…
+				   		return "#ccc";
+			   		}		       	
+       		})
+       		.style("stroke-width", "1")
+       		.style("stroke", "#FFF")
+       		.attr("d", path)
+					.on("mousemove", function(d, i) {
+					   	var currentState = this;
+					   	function over() {
+					   		if (d.properties.value == undefined) {
+					   			return "Numbers not reported";
+					   		}
+					   		else {
+					   			return d.properties.value + "%";
+					   		}
+					   	}
+					   	d3.select(this).style("opacity", 1)
+					   	div.transition()
+					   		.duration(100)
+					   		.style("opacity", .8);
+					   	div .html("Students in grade 9-12 in " + d.properties.name + " taught benefits of abstinence: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");					   	
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(100)
+						   	   .style("opacity", 0)
+						   	});
+
+            appending.exit().remove();		       
+
+	});
+ });
+}
+
+	function condomHigh() {
+
+	  	d3.select("svg")
+	  		.selectAll("path")
+	  		.remove();
+
+		d3.csv("condomHigh.csv", function(data) {
+
+			var colorScale = d3.scale.linear()
+					.domain([0, 100])
+			        .range(colorbrewer.Set1[3]);
+
+			d3.json("us-states.json", function(json) {
+
+								for (var i = 0; i < data.length; i++) {
+							
+									//Grab state name
+									var dataState = data[i].States;
+									
+									//Grab data value, and convert from string to float
+									var dataValue = parseFloat(data[i].value);
+							
+									//Find the corresponding state inside the GeoJSON
+									for (var j = 0; j < json.features.length; j++) {
+									
+										var jsonState = json.features[j].properties.name;
+							
+										if (dataState == jsonState) {
+									
+											//Copy the data value into the JSON
+											json.features[j].properties.value = dataValue;
+											
+											//Stop looking through the JSON
+											break;
+											
+										}
+									}
+								}
+
+	  	var appending = svg.selectAll("svg")
+	  		.data(json.features);
+
+	  		appending.enter().append("path")
+
+	  		.style("fill", function(d) {
+		   		var value = d.properties.value;
+			   		if (value) {
+			   			//If value exists…
+				   		return colorScale(value);
+			   		} else {
+			   			//If value is undefined…
+				   		return "#ccc";
+			   		}		       	
+       		})
+       		.style("stroke-width", "1")
+       		.style("stroke", "#FFF")
+       		.attr("d", path)
+					.on("mousemove", function(d, i) {
+					   	var currentState = this;
+					   	function over() {
+					   		if (d.properties.value == undefined) {
+					   			return "Numbers not reported";
+					   		}
+					   		else {
+					   			return d.properties.value + "%";
+					   		}
+					   	}
+					   	d3.select(this).style("opacity", 1)
+					   	div.transition()
+					   		.duration(100)
+					   		.style("opacity", 1);
+					   	div .html("Students in grade 9-12 in " + d.properties.name + " taught how to obtain condoms: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");					   	
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(100)
+						   	   .style("opacity", 0)
+						   	});
+
+            appending.exit().remove();		       
+
+	});
+ });
+}
+	function condomMiddle() {
+
+	  	d3.select("svg")
+	  		.selectAll("path")
+	  		.remove();
+
+		d3.csv("condomMiddle.csv", function(data) {
+
+			var colorScale = d3.scale.linear()
+					.domain([0, 100])
+			        .range(colorbrewer.Set1[3]);
+
+			d3.json("us-states.json", function(json) {
+
+								for (var i = 0; i < data.length; i++) {
+							
+									//Grab state name
+									var dataState = data[i].States;
+									
+									//Grab data value, and convert from string to float
+									var dataValue = parseFloat(data[i].value);
+							
+									//Find the corresponding state inside the GeoJSON
+									for (var j = 0; j < json.features.length; j++) {
+									
+										var jsonState = json.features[j].properties.name;
+							
+										if (dataState == jsonState) {
+									
+											//Copy the data value into the JSON
+											json.features[j].properties.value = dataValue;
+											
+											//Stop looking through the JSON
+											break;
+											
+										}
+									}
+								}
+
+	  	var appending = svg.selectAll("svg")
+	  		.data(json.features);
+
+	  		appending.enter().append("path")
+
+	  		.style("fill", function(d) {
+		   		var value = d.properties.value;
+			   		if (value) {
+			   			//If value exists…
+				   		return colorScale(value);
+			   		} else {
+			   			//If value is undefined…
+				   		return "#ccc";
+			   		}		       	
+       		})
+       		.style("stroke-width", "1")
+       		.style("stroke", "#FFF")
+       		.attr("d", path)
+					.on("mousemove", function(d, i) {
+					   	var currentState = this;
+					   	function over() {
+					   		if (d.properties.value == undefined) {
+					   			return "Numbers not reported";
+					   		}
+					   		else {
+					   			return d.properties.value + "%";
+					   		}
+					   	}
+					   	d3.select(this).style("opacity", 1)
+					   	div.transition()
+					   		.duration(100)
+					   		.style("opacity", .8);
+					   	div .html("Students in grade 6-8 in " + d.properties.name + " taught how to obtain condoms: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");					   	
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(200)
+						   	   .style("opacity", 0)
+						   	});
+
+            appending.exit().remove();		       
+
+	});
+ });
+}
+	function abstinenceMiddle() {
+
+	  	d3.select("svg")
+	  		.selectAll("path")
+	  		.remove();
+
+		d3.csv("abstinencemiddle.csv", function(data) {
+
+			var colorScale = d3.scale.linear()
+					.domain([0, 100])
+			        .range(colorbrewer.Set1[3]);
+
+			d3.json("us-states.json", function(json) {
+
+								for (var i = 0; i < data.length; i++) {
+							
+									//Grab state name
+									var dataState = data[i].States;
+									
+									//Grab data value, and convert from string to float
+									var dataValue = parseFloat(data[i].value);
+							
+									//Find the corresponding state inside the GeoJSON
+									for (var j = 0; j < json.features.length; j++) {
+									
+										var jsonState = json.features[j].properties.name;
+							
+										if (dataState == jsonState) {
+									
+											//Copy the data value into the JSON
+											json.features[j].properties.value = dataValue;
+											
+											//Stop looking through the JSON
+											break;
+											
+										}
+									}
+								}
+
+	  	var appending = svg.selectAll("svg")
+	  		.data(json.features);
+
+	  		appending.enter().append("path")
+
+	  		.style("fill", function(d) {
+		   		var value = d.properties.value;
+			   		if (value) {
+			   			//If value exists…
+				   		return colorScale(value);
+			   		} else {
+			   			//If value is undefined…
+				   		return "#ccc";
+			   		}		       	
+       		})
+       		.style("stroke-width", "1")
+       		.style("stroke", "#FFF")
+       		.attr("d", path)
+					.on("mousemove", function(d, i) {
+					   	var currentState = this;
+					   	function over() {
+					   		if (d.properties.value == undefined) {
+					   			return "Numbers not reported";
+					   		}
+					   		else {
+					   			return d.properties.value + "%";
+					   		}
+					   	}
+					   	d3.select(this).style("opacity", 1)
+					   	div.transition()
+					   		.duration(100)
+					   		.style("opacity", .8);
+					   	div .html("Students in grade 6-8 in " + d.properties.name + " taught benefits of abstinence: " + over())					
+			                .style("left", (d3.event.pageX) + "px")		
+			                .style("top", (d3.event.pageY - 28) + "px");					   	
+					   })
+					   .on("mouseout", function(d, i) {
+						   	var currentCountry = this;
+					   		d3.select(this).style("opacity", .7)
+						   	div.transition()
+						   	   .delay(50)
+						   	   .duration(200)
+						   	   .style("opacity", 0)
+						   	});
+
+            appending.exit().remove();		       
+
+	});
+ });
+}
+
+			var linear = d3.scale.linear()
+			  .domain([0,1])
+			  .range(["#e41a1c", "#377eb8"]);
+
+			var svg = d3.select("svg");
+
+			svg.append("g")
+			  .attr("class", "legendLinear")
+			  .attr("transform", "translate(20,20)");
+
+			var legendLinear = d3.legend.color()
+			  .shapeWidth(30)
+			  .orient('vertical')
+			  .labelFormat(d3.format("%"))
+			  .scale(linear);
+
+			svg.select(".legendLinear")
+			  .call(legendLinear);
+
+		</script>
+
+		<div id="option">
+			<input name="updateButton"
+				   class="button"
+		           type="button"
+		           value="Middle School Abstinence Education"
+		           onclick="abstinenceMiddle()">
+		    <input name="updateButton"
+		           type="button"
+		           class="button"
+		           value="High School Abstinence Education"
+		           onclick="abstinenceHigh()">
+		    <input name="updateButton"
+		           type="button"
+		           class="button"
+		           value="Middle School Condom Education" 
+		           onclick="condomMiddle()">
+		    <input name="updateButton" 
+		           type="button"
+		           class="button"
+		           value="High School Condom Education"
+		           onclick="condomHigh()">
+		</div>
+	</body>
+</html>
