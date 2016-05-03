@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Where They Come From</title>
+  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<style>
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    padding: 9px;       
+    font: 12px sans-serif;    
+    background: #E0E0E0;  
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;
+    opacity: .1;      
+}
+.node rect {
+  cursor: move;
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
+  fill: #a9aca8;
+}
+
+.node text {
+  pointer-events: none;
+}
+
+.link {
+  fill: none;
+  stroke: steelblue;
+  stroke-opacity: .2;
+}
+
+.link:hover {
+  stroke-opacity: .5;
+}
+body {
+  font-family: "Oswald", sans-serif;
+}
+
+</style>
+<body>
+
+<p id="chart">
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="Sankey1.js"></script>
+<script>
+  
+var units = "Unit(s)";
+
+var margin = {top: 55, right: 10, bottom: 10, left: 10},
+    width = 1300 - margin.left - margin.right,
+    height = 1200 - margin.top - margin.bottom;
+
+var formatNumber = d3.format(",.0f"),    // zero decimal places
+    format = function(d) { return formatNumber(d) + " " + units; },
+    color = d3.scale.category20c();
+
+// append the svg canvas to the page
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+var div = d3.select("body").append("div") 
+      .attr("class", "tooltip")       
+      .style("opacity", 1);
+
+
+// Set the sankey diagram properties
+var sankey = d3.sankey()
+    .nodeWidth(36)
+    .nodePadding(15)
+    .size([width, height]);
+
+var path = sankey.link();
+
+// load the data (using the timelyportfolio csv method)
+d3.csv("data.csv", function(error, data) {
+
+  //set up graph in same style as original example but empty
+  graph = {"nodes" : [], "links" : []};
+
+    data.forEach(function (d) {
+      graph.nodes.push({ "name": d.source });
+      graph.nodes.push({ "name": d.target });
+      graph.links.push({ "source": d.source,
+                         "target": d.target,
+                         "value": +d.value });
+     });
+
+     // return only the distinct / unique nodes
+     graph.nodes = d3.keys(d3.nest()
+       .key(function (d) { return d.name; })
+       .map(graph.nodes));
+
+     // loop through each link replacing the text with its index from node
+     graph.links.forEach(function (d, i) {
+       graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+       graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+     });
+
+     //now loop through each nodes to make nodes an array of objects
+     // rather than an array of strings
+     graph.nodes.forEach(function (d, i) {
+       graph.nodes[i] = { "name": d };
+     });
+
+  sankey
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .layout(32);
+
+// add in the links
+  var link = svg.append("g").selectAll(".link")
+      .data(graph.links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", path)
+      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+      .sort(function(a, b) { return b.dy - a.dy; })
+      .on("mousemove", function(d, i) {
+          var currentCountry = this;
+          function over() {
+              return d.value;
+          }
+          d3.select(this).style("fill-opacity", 1)
+          div.transition()
+            .duration(50)
+            .style("opacity", .8);
+          div .html("Units from " + d.source.name + " to " + d.target.name + " target " + over())
+                  .style("left", (d3.event.pageX) + "px")   
+                  .style("top", (d3.event.pageY - 28) + "px")
+                  .style("font-family", "Oswald, sans-serif");             
+         })
+         .on("mouseout", function(d, i) {
+            var currentCountry = this;
+            d3.select(this).style("fill-opacity", .7)
+            div.transition()
+               .delay(50)
+               .duration(200)
+               .style("opacity", 0)
+            });
+
+// add in the nodes
+  var node = svg.append("g").selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { 
+      return "translate(" + d.x + "," + d.y + ")"; })
+    .call(d3.behavior.drag()
+      .origin(function(d) { return d; })
+      .on("dragstart", function() { 
+      this.parentNode.appendChild(this); })
+      .on("drag", dragmove));
+
+// add the rectangles for the nodes
+  node.append("rect")
+      .attr("height", function(d) { return d.dy; })
+      .attr("width", sankey.nodeWidth())
+      .style("fill", function(d) { 
+      return d.color = color(d.name.replace(/ .*/, "")); })
+      .style("stroke", function(d) { 
+      return d3.rgb(d.color).darker(2); })
+    .append("title")
+      .text(function(d) { 
+      return d.name + "\n" + format(d.value); });
+
+// add in the title for the nodes
+  node.append("text")
+      .attr("x", -6)
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .attr("transform", null)
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x < width / 2; })
+      .attr("x", 6 + sankey.nodeWidth())
+      .attr("text-anchor", "start")
+      .style("font-family", "Oswald, sans-serif");
+
+// the function for moving the nodes
+  function dragmove(d) {
+    d3.select(this).attr("transform", 
+        "translate(" + d.x + "," + (
+                d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+            ) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+  }
+});
+
+  d3.select("svg")
+    .append("text")
+    .attr("class", "title")
+    .attr("y", 38)
+    .attr("x", width/2)
+  .style("text-anchor", "middle")
+  .style("font-family", "Oswald, sans-serif")
+    .style("font-size", "xx-large")
+  .style("font-weight", "600")
+  .style("padding-left", "21px")
+    .text("Source");
+
+</script>
+
+</body>
+</html>
