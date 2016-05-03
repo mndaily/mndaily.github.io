@@ -1,0 +1,104 @@
+//A mapbox map centered on the U
+
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Leaflet Map</title>
+        <link rel="shortcut icon" href="http://www.mndaily.com/sites/default/files/mndaily3_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="data.geojson"></script>
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+        <div id="container">
+
+        <div id="map-container">
+	
+        <div id="map" style="border:1px solid black"></div>
+
+    		<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+    		<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet'/>
+
+    		<script>
+
+            var southWest = L.latLng(44.968119, -93.245695),
+                northEast = L.latLng(44.983055, -93.219),
+                bounds = L.latLngBounds(southWest, northEast);        
+
+    		L.mapbox.accessToken = 'YOUR TOKEN';
+    		var map = L.mapbox.map("map", "mapbox.streets", {
+    			center: [44.973, -93.227],
+                zoom: 14,
+    			scrollWheelZoom: false,
+                touchZoom: false,
+                doubleClickZoom: false,
+                zoomControl: false,
+                attributionControl: true,
+                maxBounds: bounds
+    		});
+            
+            var info = L.control();
+
+            info.onAdd = function (map) {
+                this._div = L.DomUtil.create("div", "info");
+                return this._div;
+            };
+
+            info.addTo(map);
+
+    		function style(feature) {
+              return {
+    			color: "#669999",
+    			weight: 3,
+    			opacity: .6,
+    			//fillOpacity: .7,
+    			fillColor: "#669999"
+    		};
+        }
+    		geojson = L.geoJson(boundaries, {
+    		            style: style,
+    		            onEachFeature: onEachFeature
+    		        }).addTo(map);
+
+            function highlightFeature(d) {
+                var layer = d.target;
+
+                layer.setStyle( {
+                    color: '#669999', 
+                    weight: 3,
+                    opacity: 0.6,
+                    fillOpacity: 0.2,
+                    fillColor: '#FFF'
+                });
+
+                info.update(layer.feature.properties);
+            }
+
+            var geojson;
+
+            function resetHighlight(d) {
+                geojson.resetStyle(d.target);
+                info.update();
+            }
+
+            function zoomToFeature(d) {
+                map.fitBounds(d.target.getBounds());
+            }
+
+            function onEachFeature(feature, layer) {
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight
+                //    click: zoomToFeature
+                });
+            }
+
+
+    		</script>
+     </div>
+
+ </div>
+
+	</body>
+</html>
