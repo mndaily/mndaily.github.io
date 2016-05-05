@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+	<style>
+	</style>
+
+	<title>Percentage of Jobs Held by Minorities</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px; width:1000px;"></div>
+</body>
+<script>
+var chart = c3.generate({
+    data: {
+        x:'x',
+        columns: [
+            ['x', 1995,2014],
+            ['Twin Cities', 9.5,18],
+            ['State of Minnesota', 7.4,14.2]
+        ],
+        type: 'bar'
+    },
+    color: {
+        pattern: ["#003E59","#CA3333"]
+    },
+    bar: {
+        width: {
+            ratio: 0.5 // this makes bar width 50% of length between ticks
+        }
+        // or
+        //width: 100 // this makes bar width 100px
+    }
+});
+d3.select("svg").append("text")
+    .attr("x", 450 )
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Percentage of Jobs Held by Minorities");
+d3.select("svg").append("text")
+    .attr("x", 450 )
+    .attr("y", 35)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: Department of Employment and Economic Development");    
+</script>
+<!-- http://mn.gov/deed/newscenter/publications/trends/december-2015/diversity-greater-mn.jsp -->
