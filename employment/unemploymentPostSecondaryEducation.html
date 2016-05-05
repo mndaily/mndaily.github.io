@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+	<style>
+	</style>
+
+	<title>Post-Secondary Education Completion by Race</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:500px; width:500px; top:30px;"></div>
+</body>
+<script>
+var chart = c3.generate({
+    data: {
+        columns: [
+        ['White', 177090],
+            ['Asian', 9072],
+            ['Black/African American', 10907],
+            ['Hispanic/Latino', 5886],
+            ['American Indian or Alaska Native', 1597], 
+            ['Other', 4506],
+            ['Race not Reported', 6358]
+        ],
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    donut: {
+        title: "Post-Secondary Education Completion"
+    },
+        color: {
+        pattern: ["#003E59","#6D8591","#B9C5CB","#a32929","#CA3333", "000000"]
+    }
+});
+d3.select("svg").append("text")
+    .attr('x', d3.select('#chart').node().getBoundingClientRect().width / 2)
+    .attr("y", 5)
+    .style("text-anchor", "middle")
+    .style("font-size", "medium")
+    .text("");
+d3.select("svg").append("text")
+    .attr("x", 250 )
+    .attr("y", 435)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source:  Department of Employment and Economic Development");    
+</script>
+<!-- source: http://mn.gov/deed/newscenter/publications/trends/december-2015/disparities-wage-employment.jsp -->
