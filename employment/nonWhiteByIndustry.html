@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+	<style>
+	</style>
+
+	<title>Non-Whites by Industry</title>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:500px; width:1000px;"></div>
+</body>
+<script>
+var chart = c3.generate({
+    data: {
+        labels: true,
+        columns: [
+           ['Administrative and Support Services', 19.8],
+            ['Health Care and Social Assistance', 15.9],
+            ['Accommodation and Food Services', 15.2],
+            ['Arts, Entertainment and Recreation', 12.5],
+            ['Manufacturing', 12.2],
+            ['Real Estate and Rental and Leasing', 11.7],
+            ['Transportation and Warehousing', 10.4],
+            ['Other Services', 10.2],
+            ['Retail Trade', 9.7],
+            ['Management of Companies', 9.3], 
+            ['Information', 9.3], 
+            ['Public Administration', 8.8],
+            ['Professional and Technical Services', 8.8],
+            ['Finance and Insurance', 8.5], 
+            ['Educational Services', 7.5],
+            ['Agriculture', 6.8],
+            ['Wholesale Trade', 6.1],
+            ['Construction', 5.1],
+            ['Utilities', 4.0],
+            ['Mining', 1.7]
+        ],
+        type: 'bar'
+    },
+    color: {
+        pattern: ["#003E59","#007db3","#00b3ff","#33c2ff","#66d1ff","#99e0ff","#6D8591", "#ca3333","#8f2424","#521414","#d65c5c","#e08585","#eaaeae", "#000000", "#262626","#4d4d4d","#737373","#999999","#bfbfbf","#e6e6e6"]
+    },
+    bar: {
+        width: {
+            ratio: 0.5 // this makes bar width 50% of length between ticks
+        }
+        // or
+        //width: 100 // this makes bar width 100px
+    }
+});
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Percentage of Minorities by Industry, 2014");
+d3.select("svg").append("text")
+    .attr("x", 500 )
+    .attr("y", 35)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: Department of Employment and Economic Development");;    
+</script>
+<!-- SOURCE: http://mn.gov/deed/newscenter/publications/trends/december-2015/workforce-diversity-industry.jsp -->
