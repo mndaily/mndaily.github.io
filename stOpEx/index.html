@@ -45,7 +45,7 @@ var y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
 var z = d3.scaleOrdinal()
-    .range(["#67001f","#b2182b","#d6604d","#f4a582","#fddbc7","#f7f7f7","#d1e5f0","#92c5de","#4393c3","#2166ac","#053061"]);
+    .range(["#fff7fb","#ece7f2","#d0d1e6","#a6bddb","#74a9cf","#3690c0","#0570b0","#045a8d","#023858"]);
 
 var div = d3.select("body").append("div") 
   .attr("class", "tooltip")       
@@ -66,8 +66,7 @@ d3.csv("cuts.csv", type, function(error, data) {
 
   var headers = [];
   headers = data;
-  console.log(headers);
-  console.log(headers["0"].Other);  
+
 
   g.selectAll(".serie")
     .data(stack.keys(data.columns.slice(1))(data))
@@ -83,9 +82,8 @@ d3.csv("cuts.csv", type, function(error, data) {
       .attr("width", x.bandwidth())
       .style("fill-opacity", .7)
       .on("mousemove", function(d) {
-
-          console.log()
           d3.select(this).style("fill-opacity", 1)
+          d3.select(this).style("stroke", "black")          
         div.transition()
           .duration(100)
           .style("opacity", 1);
@@ -205,6 +203,7 @@ d3.csv("cuts.csv", type, function(error, data) {
        })
        .on("mouseout", function(d, i) {
           d3.select(this).style("fill-opacity", .7)
+          d3.select(this).style("stroke", "none")
           div.transition()
              .delay(50)
              .duration(200)
@@ -246,11 +245,9 @@ d3.select("svg").append("text")
 
 function type(d, i, columns) {
   for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-    console.log(d.columns);
   d.total = t;
   
   return d;
-  console.log(d);
 }
 
 </script>
