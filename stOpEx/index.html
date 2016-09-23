@@ -26,7 +26,7 @@ div.tooltip {
 
 </style>
 <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-<svg width="960" height="500"></svg>
+<svg width="600" height="500"></svg>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script>
 
@@ -42,7 +42,7 @@ var x = d3.scaleBand()
     .align(0.1);
 
 var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
+    .rangeRound([height-60, 0]);
 
 var z = d3.scaleOrdinal()
     .range(["#fff7fb","#ece7f2","#d0d1e6","#a6bddb","#74a9cf","#3690c0","#0570b0","#045a8d","#023858"]);
@@ -210,10 +210,24 @@ d3.csv("https://raw.githubusercontent.com/mndaily/mndaily.github.io/master/stOpE
              .style("opacity", 0)
           });
 
-  g.append("g")
-      .attr("class", "axis axis--x")
+  // g.append("g")
+  //     .attr("class", "axis axis--x")
+  //     .attr("transform", "translate(0," + height + ")")
+  //   .append("text")      
+  //     .attr("transform", "rotate(-90)")
+  //     .attr("text-anchor", "end")
+  //     .call(d3.axisBottom(x));
+
+  svg.append("g")
+      .attr("class", "axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x).tickSize(0))
+      .selectAll("text")	
+        // .style("text-anchor", "end")
+        .attr("dx", "-.1em")
+        .attr("dy", "3.9em")
+        .style("font-size", "xx-small")
+        .attr("transform", "rotate(-90)");
 
   g.append("g")
       .attr("class", "axis axis--y")
@@ -227,14 +241,14 @@ d3.csv("https://raw.githubusercontent.com/mndaily/mndaily.github.io/master/stOpE
       .text("$");
 
 d3.select("svg").append("text")
-    .attr("x", width/2 )
+    .attr("x", width/1.7 )
     .attr("y", 30)
     .style("text-anchor", "middle")
     .style("font-size", "x-large")
     .style("font-family", "Oswald")
     .text("Administrative Funds Cut in 2015");
 d3.select("svg").append("text")
-    .attr("x", width/2 )
+    .attr("x", width/1.7 )
     .attr("y", 40)
     .style("text-anchor", "middle")
     .style("font-size", "x-small")
