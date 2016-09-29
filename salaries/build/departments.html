@@ -1,0 +1,862 @@
+<html lang="en">
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <link rel="stylesheet" href="static/style.css" />
+    	<link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">  
+        <link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">       
+        <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>  
+        <!-- Load c3.css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css" rel="stylesheet" type="text/css">
+
+        <!-- Load d3.js and c3.js -->
+        <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.js"></script>        
+        <style>
+</style>
+    
+ </head>
+    <body>
+
+        <h1>Department Salary Averages</h1>
+        <div id="chart"></div>
+            <script>
+            var rowData;
+                $(document).ready(function() {
+                    var table = $('#salaries').DataTable();
+                 
+                    $('#salaries tbody').on( 'click', 'tr', function () {
+                        if ( $(this).hasClass('selected') ) {
+                            $(this).removeClass('selected');
+                        }
+                        else {
+                            table.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    } );
+                 
+                    $('#button').click( function () {
+                         rowData = table.row('.selected').data();
+                        console.log(rowData);
+                    } );
+                } );
+
+            var chart = c3.generate({
+                bindto: '#chart',                
+                data: {
+                    columns: [
+                        ["Selected employee", rowData[4]]
+                    ],
+                    type: "scatter"
+                }
+            });
+        </script>
+
+        <button id="button">Select</button>
+        <table id="salaries" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+                <th>Department</th>
+                <th>Average Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+        
+            <tr>
+                <td>Accounting</td>
+                <td>$206,019.57 </td>
+            </tr>
+        
+            <tr>
+                <td>Aerospace Engr/Mechanics</td>
+                <td>$109,541.43 </td>
+            </tr>
+        
+            <tr>
+                <td>Afr American/African Studies</td>
+                <td>$95,908.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Agricultural Education</td>
+                <td>$70,201.40 </td>
+            </tr>
+        
+            <tr>
+                <td>Agronomy/Plant Genetics</td>
+                <td>$113,909.47 </td>
+            </tr>
+        
+            <tr>
+                <td>Allied-Medical Lab Science</td>
+                <td>$90,075.80 </td>
+            </tr>
+        
+            <tr>
+                <td>Allied-Occupational Therapy</td>
+                <td>$68,072.60 </td>
+            </tr>
+        
+            <tr>
+                <td>American Indian Studies</td>
+                <td>$85,847.83 </td>
+            </tr>
+        
+            <tr>
+                <td>American Studies</td>
+                <td>$96,209.25 </td>
+            </tr>
+        
+            <tr>
+                <td>Anesthesiology</td>
+                <td>$46,435.42 </td>
+            </tr>
+        
+            <tr>
+                <td>Animal Hlth/Food Safety, Ctr</td>
+                <td>$184,308.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Animal Science, Dept of</td>
+                <td>$106,245.42 </td>
+            </tr>
+        
+            <tr>
+                <td>Anthropology</td>
+                <td>$92,846.11 </td>
+            </tr>
+        
+            <tr>
+                <td>Applied Economics</td>
+                <td>$120,277.48 </td>
+            </tr>
+        
+            <tr>
+                <td>Architecture, School of</td>
+                <td>$32,677.59 </td>
+            </tr>
+        
+            <tr>
+                <td>Art Dept</td>
+                <td>$75,943.71 </td>
+            </tr>
+        
+            <tr>
+                <td>Art History</td>
+                <td>$92,378.10 </td>
+            </tr>
+        
+            <tr>
+                <td>Asian Languages/Literatures</td>
+                <td>$78,147.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Astrophysics, MN Institute for</td>
+                <td>$119,131.18 </td>
+            </tr>
+        
+            <tr>
+                <td>Bell Museum of Natural History</td>
+                <td>$106,208.50 </td>
+            </tr>
+        
+            <tr>
+                <td>Biochem,Molec Biol,Biophy TCBS</td>
+                <td>$122,534.45 </td>
+            </tr>
+        
+            <tr>
+                <td>Biochem,Molec Biol,Biophy TMED</td>
+                <td>$121,271.84 </td>
+            </tr>
+        
+            <tr>
+                <td>Bioethics, Center for</td>
+                <td>$110,295.67 </td>
+            </tr>
+        
+            <tr>
+                <td>Biology Program</td>
+                <td>$72,427.10 </td>
+            </tr>
+        
+            <tr>
+                <td>Biomedical Engineering</td>
+                <td>$110,545.78 </td>
+            </tr>
+        
+            <tr>
+                <td>BioMedical Health Informatics</td>
+                <td>$99,370.20 </td>
+            </tr>
+        
+            <tr>
+                <td>Bioproducts/Biosystems Engr</td>
+                <td>$91,517.10 </td>
+            </tr>
+        
+            <tr>
+                <td>Biostatistics</td>
+                <td>$140,334.54 </td>
+            </tr>
+        
+            <tr>
+                <td>Biotechnology Institute</td>
+                <td>$104,146.17 </td>
+            </tr>
+        
+            <tr>
+                <td>Cancer Center</td>
+                <td>$102,953.55 </td>
+            </tr>
+        
+            <tr>
+                <td>CCE Degree and Credit Programs</td>
+                <td>$0.00 </td>
+            </tr>
+        
+            <tr>
+                <td>CDes Research and Outreach</td>
+                <td>$120,000.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Chemical Engr/Mat Sci</td>
+                <td>$120,983.27 </td>
+            </tr>
+        
+            <tr>
+                <td>Chemistry</td>
+                <td>$110,124.19 </td>
+            </tr>
+        
+            <tr>
+                <td>Chicano and Latino Studies</td>
+                <td>$65,211.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Child Development, Inst of</td>
+                <td>$133,262.24 </td>
+            </tr>
+        
+            <tr>
+                <td>Civil, Envrn &amp; Geo- Eng</td>
+                <td>$117,355.84 </td>
+            </tr>
+        
+            <tr>
+                <td>Classical/Near Eastern Studies</td>
+                <td>$88,515.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Cloquet Forestry Center</td>
+                <td>$126,237.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Communication Studies</td>
+                <td>$94,000.21 </td>
+            </tr>
+        
+            <tr>
+                <td>Computer Science/Engineering</td>
+                <td>$133,529.58 </td>
+            </tr>
+        
+            <tr>
+                <td>Cultural Studies/Compa Lit</td>
+                <td>$100,675.90 </td>
+            </tr>
+        
+            <tr>
+                <td>Curriculum and Instruction</td>
+                <td>$90,448.30 </td>
+            </tr>
+        
+            <tr>
+                <td>Dermatology</td>
+                <td>$44,404.17 </td>
+            </tr>
+        
+            <tr>
+                <td>Design, Housing/Apparel</td>
+                <td>$92,218.36 </td>
+            </tr>
+        
+            <tr>
+                <td>Developmental/Surgical Science</td>
+                <td>$67,178.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Diagnostic/Biological Sciences</td>
+                <td>$113,161.35 </td>
+            </tr>
+        
+            <tr>
+                <td>DMED Biobehav Hlth/Population</td>
+                <td>$110,517.00 </td>
+            </tr>
+        
+            <tr>
+                <td>DMED Biomedical Sciences</td>
+                <td>$71,310.62 </td>
+            </tr>
+        
+            <tr>
+                <td>DMED Family Med/Comm Hlth</td>
+                <td>$122,405.33 </td>
+            </tr>
+        
+            <tr>
+                <td>Drug Design, Center for</td>
+                <td>$104,576.83 </td>
+            </tr>
+        
+            <tr>
+                <td>Duluth Pharmacy Program</td>
+                <td>$104,541.43 </td>
+            </tr>
+        
+            <tr>
+                <td>Earth Sciences, Department of</td>
+                <td>$104,573.05 </td>
+            </tr>
+        
+            <tr>
+                <td>Ecology, Evolution/Behavior</td>
+                <td>$105,017.26 </td>
+            </tr>
+        
+            <tr>
+                <td>Economics</td>
+                <td>$238,892.12 </td>
+            </tr>
+        
+            <tr>
+                <td>Educational Psychology</td>
+                <td>$95,514.48 </td>
+            </tr>
+        
+            <tr>
+                <td>Electrical and Computer Engr</td>
+                <td>$118,443.54 </td>
+            </tr>
+        
+            <tr>
+                <td>Emergency Medicine</td>
+                <td>$53,671.33 </td>
+            </tr>
+        
+            <tr>
+                <td>English, Language/Literature</td>
+                <td>$88,224.06 </td>
+            </tr>
+        
+            <tr>
+                <td>Entomology, Dept of</td>
+                <td>$107,013.19 </td>
+            </tr>
+        
+            <tr>
+                <td>Environmental Health Sciences</td>
+                <td>$130,322.78 </td>
+            </tr>
+        
+            <tr>
+                <td>Epidemiology</td>
+                <td>$135,118.90 </td>
+            </tr>
+        
+            <tr>
+                <td>Experimental/Clin Pharmacology</td>
+                <td>$119,165.78 </td>
+            </tr>
+        
+            <tr>
+                <td>Family Medicine/Comm Health</td>
+                <td>$57,462.64 </td>
+            </tr>
+        
+            <tr>
+                <td>Family Social Science</td>
+                <td>$104,534.10 </td>
+            </tr>
+        
+            <tr>
+                <td>Finance</td>
+                <td>$211,076.13 </td>
+            </tr>
+        
+            <tr>
+                <td>Fisheries/Wildlife/Cnsrv Biol</td>
+                <td>$99,948.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Food Science and Nutrition</td>
+                <td>$97,082.39 </td>
+            </tr>
+        
+            <tr>
+                <td>Food/Agr/Nat Rsrc Sci Adm, Col</td>
+                <td>$212,175.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Forest Resources, Dept of</td>
+                <td>$98,949.62 </td>
+            </tr>
+        
+            <tr>
+                <td>French and Italian</td>
+                <td>$82,364.77 </td>
+            </tr>
+        
+            <tr>
+                <td>Gender, Women and Sexuality</td>
+                <td>$89,906.56 </td>
+            </tr>
+        
+            <tr>
+                <td>Genetics, Cell Biol, Dev TCBS</td>
+                <td>$109,338.44 </td>
+            </tr>
+        
+            <tr>
+                <td>Genetics, Cell Biol, Dev TMED</td>
+                <td>$97,906.70 </td>
+            </tr>
+        
+            <tr>
+                <td>Geography</td>
+                <td>$82,983.59 </td>
+            </tr>
+        
+            <tr>
+                <td>German, Scandinavian, &amp; Dutch</td>
+                <td>$96,143.07 </td>
+            </tr>
+        
+            <tr>
+                <td>Health Policy/Mgmt, Div of</td>
+                <td>$152,809.71 </td>
+            </tr>
+        
+            <tr>
+                <td>History</td>
+                <td>$98,097.71 </td>
+            </tr>
+        
+            <tr>
+                <td>Honors Program, TC Campus</td>
+                <td>$0.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Hormel Institute</td>
+                <td>$81,140.68 </td>
+            </tr>
+        
+            <tr>
+                <td>Horticultural Science</td>
+                <td>$106,437.63 </td>
+            </tr>
+        
+            <tr>
+                <td>Humphrey Sch of Public Affairs</td>
+                <td>$125,656.43 </td>
+            </tr>
+        
+            <tr>
+                <td>Industrial/Systems Engineering</td>
+                <td>$106,765.42 </td>
+            </tr>
+        
+            <tr>
+                <td>Information/Decision Sciences</td>
+                <td>$189,429.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Integrative Biology/Physiology</td>
+                <td>$84,249.94 </td>
+            </tr>
+        
+            <tr>
+                <td>Interdisciplinary Instruction</td>
+                <td>$0.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Journalism/Mass Comm, Sch of</td>
+                <td>$92,243.35 </td>
+            </tr>
+        
+            <tr>
+                <td>Kinesiology, School of</td>
+                <td>$101,651.25 </td>
+            </tr>
+        
+            <tr>
+                <td>Lab Medicine/Pathology</td>
+                <td>$76,217.84 </td>
+            </tr>
+        
+            <tr>
+                <td>Landscape Arboretum</td>
+                <td>$282,180.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Landscape Architecture</td>
+                <td>$34,611.68 </td>
+            </tr>
+        
+            <tr>
+                <td>Law School</td>
+                <td>$186,184.34 </td>
+            </tr>
+        
+            <tr>
+                <td>Lib Arts Adm Ofc of the Dean</td>
+                <td>$192,975.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Linguistics, Institute of</td>
+                <td>$65,000.13 </td>
+            </tr>
+        
+            <tr>
+                <td>Marketing</td>
+                <td>$203,209.77 </td>
+            </tr>
+        
+            <tr>
+                <td>Math Ctr for Educational Prgms</td>
+                <td>$52,000.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Mathematics, Sch of</td>
+                <td>$100,866.21 </td>
+            </tr>
+        
+            <tr>
+                <td>Mechanical Engineering</td>
+                <td>$126,593.40 </td>
+            </tr>
+        
+            <tr>
+                <td>Medical School Admin, TMED</td>
+                <td>$72,431.25 </td>
+            </tr>
+        
+            <tr>
+                <td>Medicinal Chem Pharmacognosy</td>
+                <td>$157,870.94 </td>
+            </tr>
+        
+            <tr>
+                <td>Medicine</td>
+                <td>$45,127.90 </td>
+            </tr>
+        
+            <tr>
+                <td>Microbiology</td>
+                <td>$96,239.44 </td>
+            </tr>
+        
+            <tr>
+                <td>Minnesota Population Center</td>
+                <td>$107,984.50 </td>
+            </tr>
+        
+            <tr>
+                <td>Music</td>
+                <td>$88,979.21 </td>
+            </tr>
+        
+            <tr>
+                <td>NC Research/Outreach Center</td>
+                <td>$88,196.33 </td>
+            </tr>
+        
+            <tr>
+                <td>Neurology</td>
+                <td>$62,639.53 </td>
+            </tr>
+        
+            <tr>
+                <td>Neuroscience</td>
+                <td>$110,843.23 </td>
+            </tr>
+        
+            <tr>
+                <td>Neurosurgery</td>
+                <td>$63,217.88 </td>
+            </tr>
+        
+            <tr>
+                <td>Nursing, School of</td>
+                <td>$88,501.73 </td>
+            </tr>
+        
+            <tr>
+                <td>NW Research/Outreach Center</td>
+                <td>$71,845.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Obstetrics and Gynecology</td>
+                <td>$57,564.96 </td>
+            </tr>
+        
+            <tr>
+                <td>Ophthalmology</td>
+                <td>$70,117.05 </td>
+            </tr>
+        
+            <tr>
+                <td>Org Leadership, Policy/Dev</td>
+                <td>$88,896.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Orthopaedic Surgery</td>
+                <td>$46,450.89 </td>
+            </tr>
+        
+            <tr>
+                <td>Otolaryngology</td>
+                <td>$54,604.58 </td>
+            </tr>
+        
+            <tr>
+                <td>Pediatrics</td>
+                <td>$56,068.04 </td>
+            </tr>
+        
+            <tr>
+                <td>Pharmaceutical Care and Health</td>
+                <td>$120,349.85 </td>
+            </tr>
+        
+            <tr>
+                <td>Pharmaceutics</td>
+                <td>$132,214.40 </td>
+            </tr>
+        
+            <tr>
+                <td>Pharmacology</td>
+                <td>$90,527.89 </td>
+            </tr>
+        
+            <tr>
+                <td>Philosophy</td>
+                <td>$106,519.46 </td>
+            </tr>
+        
+            <tr>
+                <td>Physical Med/Rehabilitation</td>
+                <td>$61,601.92 </td>
+            </tr>
+        
+            <tr>
+                <td>Physics and Astronomy</td>
+                <td>$115,842.90 </td>
+            </tr>
+        
+            <tr>
+                <td>Plant Biology</td>
+                <td>$97,003.78 </td>
+            </tr>
+        
+            <tr>
+                <td>Plant Pathology</td>
+                <td>$112,631.50 </td>
+            </tr>
+        
+            <tr>
+                <td>Political Science</td>
+                <td>$110,174.46 </td>
+            </tr>
+        
+            <tr>
+                <td>Post Secondary Tchg/Lrng</td>
+                <td>$91,282.93 </td>
+            </tr>
+        
+            <tr>
+                <td>Primary Dental Care</td>
+                <td>$59,076.25 </td>
+            </tr>
+        
+            <tr>
+                <td>Professional Education</td>
+                <td>$61,155.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Professional/External Relation</td>
+                <td>$96,500.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Psychiatry</td>
+                <td>$66,736.80 </td>
+            </tr>
+        
+            <tr>
+                <td>Psychology</td>
+                <td>$125,267.91 </td>
+            </tr>
+        
+            <tr>
+                <td>Public Health, School of</td>
+                <td>$92,265.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Radiation Oncology</td>
+                <td>$65,699.33 </td>
+            </tr>
+        
+            <tr>
+                <td>Radiology</td>
+                <td>$74,995.76 </td>
+            </tr>
+        
+            <tr>
+                <td>Raptor Center</td>
+                <td>$81,341.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Restorative Sciences</td>
+                <td>$49,353.46 </td>
+            </tr>
+        
+            <tr>
+                <td>S Research/Outreach Center</td>
+                <td>$90,863.25 </td>
+            </tr>
+        
+            <tr>
+                <td>Science/Technology, Hist of</td>
+                <td>$88,461.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Social Work, School of</td>
+                <td>$88,141.57 </td>
+            </tr>
+        
+            <tr>
+                <td>Sociology</td>
+                <td>$104,878.21 </td>
+            </tr>
+        
+            <tr>
+                <td>Soil, Water, and Climate</td>
+                <td>$109,509.29 </td>
+            </tr>
+        
+            <tr>
+                <td>Spanish and Portuguese</td>
+                <td>$77,741.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Speech/Language/Hearing Sci</td>
+                <td>$87,606.92 </td>
+            </tr>
+        
+            <tr>
+                <td>Spirituality/Healing, Ctr for</td>
+                <td>$34,665.59 </td>
+            </tr>
+        
+            <tr>
+                <td>St Anthony Falls Laboratory</td>
+                <td>$58,067.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Statistics,School of</td>
+                <td>$124,268.81 </td>
+            </tr>
+        
+            <tr>
+                <td>Strategic Mgmt/Entrepreneur</td>
+                <td>$200,643.74 </td>
+            </tr>
+        
+            <tr>
+                <td>Supply Chain and Operations</td>
+                <td>$179,755.27 </td>
+            </tr>
+        
+            <tr>
+                <td>Surgery</td>
+                <td>$57,994.30 </td>
+            </tr>
+        
+            <tr>
+                <td>SW Research/Outreach Center</td>
+                <td>$79,324.67 </td>
+            </tr>
+        
+            <tr>
+                <td>Theatre Arts and Dance</td>
+                <td>$75,761.89 </td>
+            </tr>
+        
+            <tr>
+                <td>Urologic Surgery</td>
+                <td>$42,936.33 </td>
+            </tr>
+        
+            <tr>
+                <td>Veterinary Biosciences</td>
+                <td>$116,020.81 </td>
+            </tr>
+        
+            <tr>
+                <td>Veterinary Clinical Sciences</td>
+                <td>$116,948.91 </td>
+            </tr>
+        
+            <tr>
+                <td>Veterinary Population Medicine</td>
+                <td>$113,603.85 </td>
+            </tr>
+        
+            <tr>
+                <td>WC Research/Outreach Center</td>
+                <td>$74,295.00 </td>
+            </tr>
+        
+            <tr>
+                <td>Work and Organizations</td>
+                <td>$164,934.08 </td>
+            </tr>
+        
+            <tr>
+                <td>Writing Studies</td>
+                <td>$93,277.75 </td>
+            </tr>
+        
+          </tbody>
+        </table>
+        <div id="nav">
+          <a href="/">Home</a> / Departments
+        </div> 
+    </body> 
+</html>
