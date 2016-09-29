@@ -1,0 +1,77 @@
+<html lang="en">
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    	<link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">  
+        <link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">       
+        <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>  
+        <!-- Load c3.css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css" rel="stylesheet" type="text/css">
+
+        <!-- Load d3.js and c3.js -->
+        <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.js"></script>        
+        <style>
+</style>
+    
+ </head>
+    <body>
+
+        <h1>Department Salary Averages</h1>
+        <div id="chart"></div>
+            <script>
+            var rowData;
+                $(document).ready(function() {
+                    var table = $('#salaries').DataTable();
+                 
+                    $('#salaries tbody').on( 'click', 'tr', function () {
+                        if ( $(this).hasClass('selected') ) {
+                            $(this).removeClass('selected');
+                        }
+                        else {
+                            table.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    } );
+                 
+                    $('#button').click( function () {
+                         rowData = table.row('.selected').data();
+                        console.log(rowData);
+                    } );
+                } );
+
+            var chart = c3.generate({
+                bindto: '#chart',                
+                data: {
+                    columns: [
+                        ["Selected employee", rowData[4]]
+                    ],
+                    type: "scatter"
+                }
+            });
+        </script>
+
+        <button id="button">Select</button>
+        <table id="salaries" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+                <th>Department</th>
+                <th>Average Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.Department }}</td>
+                <td>{{ obj.Average_Salary }}</td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+        <div id="nav">
+          <a href="/">Home</a> / Departments
+        </div> 
+    </body> 
+</html>

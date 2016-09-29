@@ -1,0 +1,80 @@
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    	<link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">  
+        <link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">       
+        <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+        <script src="https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.min.css"></script>
+        <script src="https://cdn.datatables.net/scroller/1.4.2/js/dataTables.scroller.min.js"></script> 
+        <!-- Load c3.css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css" rel="stylesheet" type="text/css">
+
+        <!-- Load d3.js and c3.js -->
+        <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.js"></script>        
+        <style>/*
+ 
+</style>
+    
+ </head>
+    <body>
+
+        <h1>Faculty/Staff Salaries</h1>
+
+        <button id="button">Select</button>
+        <script>
+                $(document).ready(function() {
+                var table = $('#salaries').DataTable({
+                    scrollY:        200,
+                    deferRender:    true,
+                    scroller:       true,
+                    "bSortClasses": false                    
+                });
+
+                $('#salaries tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+                } );
+
+                $('#button').click( function () {
+                 rowData = table.row('.selected').data();
+                console.log(rowData);
+                } );
+                } );
+        </script>
+        <table id="salaries" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Original Year Hired</th>
+                <th>Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td> <a href="{{ obj.FORMATNAME }}" + "index.html">{{ obj.NAME }}</a> </td>
+                <td> <a href="{{ obj.DEPT }}">{{ obj.DEPT }}</a> </td>
+                <td>{{ obj.JOBCODE_DESCR }}</td>
+                <td>{{ obj.ORIG_HIRE_YEAR }}</td>
+                <td>{{ obj.TOT_IPED_SALARY_2014 }}</td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+        <div id="nav">
+            <p><a href="departments">See department averages</a></p>
+        </div>
+    </body> 
+</html>

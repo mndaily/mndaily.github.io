@@ -1,0 +1,116 @@
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    	<link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">  
+        <link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">       
+        <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>  
+        <!-- Load c3.css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.css" rel="stylesheet" type="text/css">
+
+        <!-- Load d3.js and c3.js -->
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.js"></script>        
+    <title>{{ object.NAME }}</title>
+    
+ </head>
+    <body>
+
+        <h1>{{ object.NAME }}</h1>
+        <div id="chart"></div>
+            <script>
+            var rowData;
+                $(document).ready(function() {
+                    var table = $('#salaries').DataTable();
+                 
+                    $('#salaries tbody').on( 'click', 'tr', function () {
+                        if ( $(this).hasClass('selected') ) {
+                            $(this).removeClass('selected');
+                        }
+                        else {
+                            table.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    } );
+                 
+                    $('#button').click( function () {
+                         rowData = table.row('.selected').data();
+                        console.log(rowData);
+                    } );
+                } );
+            </script>
+
+        <script>
+            var chart = c3.generate({
+                bindto: '#chart',
+                data: {                
+                    x : 'x',  
+                    columns: [
+                        ['x', '2010-01-01', '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01'],
+                        ["Salary", {{ object.TOT_IPED_SALARY_2010 }}, {{ object.TOT_IPED_SALARY_2011 }}, {{ object.TOT_IPED_SALARY_2012 }}, {{ object.TOT_IPED_SALARY_2013 }}, {{ object.TOT_IPED_SALARY_2014 }}]
+                    ]
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y'
+                        }
+                    },
+                    y: {
+                        tick: {
+                            format: d3.format(",$")
+                        }                        
+                    }
+                },
+                tooltip: {
+                    format: {
+                        value: function (value, ratio, id) {
+                            var format = id === "Salary" ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+            //            value: d3.format(',') // apply this format to both y and y2
+                    }
+                },
+                legend: {
+                    hide: true
+                }
+            });
+        </script>
+
+        <table id="salaries" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+                <th>Name</th> 
+                <th>Position</th>           
+                <th>Department</th>
+                <th>2010 Salary</th>
+                <th>2011 Salary</th>
+                <th>2012 Salary</th>
+                <th>2013 Salary</th>
+                <th>2014 Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>{{ object.NAME }}</td>
+                <td>{{ object.JOBCODE_DESCR }}</td>
+                <td>{{ object.DEPT }}</td>
+                <td>{{ object.TOT_IPED_SALARY_2010 }}</td>
+                <td>{{ object.TOT_IPED_SALARY_2011 }}</td>
+                <td>{{ object.TOT_IPED_SALARY_2012 }}</td>
+                <td>{{ object.TOT_IPED_SALARY_2013 }}</td>
+                <td>{{ object.TOT_IPED_SALARY_2014 }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="nav">
+          <p><a href="/index.html">Go back</a></p>
+        </div> 
+    </body> 
+</html>
