@@ -55,10 +55,9 @@
 
 			//Create SVG element
 			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h)
-        				.attr("y", -100);
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
 			//Load in GeoJSON data
 			d3.json("houseDistricts.json", function(json) {
 				
