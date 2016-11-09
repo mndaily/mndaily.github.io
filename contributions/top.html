@@ -24,7 +24,7 @@ var chart = c3.generate({
 	bindto: "#chart",
     data: {
         columns: [
-            ['Contributions', 7700, 6000, 2899, 2750, 2700, 2700, 2613, 2500, 2300],
+            ['Contributions', 6000, 2899, 2750, 2700, 2700, 2613, 2500, 2300],
         ],
         types: {
             Contributions: 'bar',
@@ -33,7 +33,7 @@ var chart = c3.generate({
     axis: {
 	    x: {
 	        type: 'category',
-	        categories: ['Mary Lawrence', 'Steven Ruggles', 'Morgan Carr-Markell', 'Megan Dahlberg', 'Gerald Caruso', 'Craig Weinert', 'Carston Wagner', 'Carrie Terrell', 'Jeylan Mortimer']
+	        categories: ['Steven Ruggles', 'Morgan Carr-Markell', 'Megan Dahlberg', 'Gerald Caruso', 'Craig Weinert', 'Carston Wagner', 'Carrie Terrell', 'Jeylan Mortimer']
 	    },
         y : {
             tick: {
@@ -70,6 +70,6 @@ d3.select("#chart svg").append("text")
     .attr("y", 31)
     .style("text-anchor", "middle")
     .style("font-size", "x-small")
-    .text("Source: FEC");
+    .text("Source: FEC. Data includes people who self-reported their employer as the University of Minnesota.");
 </script>
 </html>
