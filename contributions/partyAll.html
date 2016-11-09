@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<head>
+	<title>By Party All</title>
+	<style>
+
+		.c3-bar {
+			opacity: .8 !important;
+			}
+		.c3 svg {
+		    font: 10px sans-serif;
+		    padding-left: 50px;
+		    padding-top: 20px;
+		}				
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<div id="chart"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+	bindto: "#chart",
+	data: {
+		columns: [
+			["Contributions",  166845.17, 5772.05, 2144, 852]
+		],
+		types: {
+			Contributions: 'bar'
+		}
+	},
+	color: {
+		pattern: ["#003C57"]
+	},	
+    axis: {
+        rotated: true,
+        y : {
+            tick: {
+                format: d3.format("$,")
+            },
+        	type: 'category',
+        	categories: ["Democrat/DFL", "Medical", "Republican", "Other"]            
+        },        x : {
+        	type: 'category',
+        	categories: ["Democrat/DFL", "Republican"],
+        	tick: {
+            	format: function (d) { 
+	            	if (d == 0) {
+	            		return "Democrat/DFL";
+	            	}
+	            	else if (d == 1) {
+	            		return "Medical";
+	            	}
+	            	else if (d == 2) {
+	            		return "Republican";
+	            	}
+	            	else {
+	            		return "Other";
+	            	}
+	            }
+        }
+	},
+    tooltip: {
+        format: {
+            title: function (d) { 
+            	if (d == 0) {
+            		return "Democrat/DFL";
+            	}
+            	else if (d == 1) {
+            		return "Medical";
+            	}
+            	else if (d == 2) {
+            		return "Republican";
+            	}
+            	else {
+            		return "Other";
+            	}
+            },
+            value: function (value, ratio, id) {
+                var format = id === 'Republican' ? d3.format(',') : d3.format('$');
+                return format(value);
+            },
+            value: d3.format('$,') // apply this format to both y and y2
+        }
+    }
+  }
+});
+
+d3.select("#chart svg").append("text")
+	.attr('x', d3.select('#chart svg').node().getBoundingClientRect().width / 2)        
+	.attr("y", 8)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .style("font-family", "Oswald")
+    .text("Campaign contributions from all U employees");
+d3.select("#chart svg").append("text")
+	.attr('x', d3.select('#chart svg').node().getBoundingClientRect().width / 2)    
+	.attr("y", 18)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: FEC");
+</script>
+</html>
