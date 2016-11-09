@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<head>
+	<title>By Party Professors</title>
+	<style>
+		.c3-bar {
+			opacity: .8 !important;
+		}
+		#chart {
+			margin: 0 auto;
+			display: block;
+		}
+		.c3 svg {
+		    font: 10px sans-serif;
+		    padding-left: 50px;
+		    margin-top: 25px;
+		}			
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<div id="chart"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+	bindto: "#chart",
+	data: {
+		columns: [
+			["Contributions",  26545.16, 811]
+		],
+		types: {
+			Contributions: 'bar'
+		}
+	},
+	color: {
+		pattern: ["#003C57"]
+	},	
+	legend: {
+		show: false
+	},
+    axis: {
+        rotated: true,
+        y : {
+        	padding: { left: 200 },
+            tick: {
+                format: d3.format("$,"),
+                rotate: 50
+            },
+        },
+        x : {
+        	type: 'category',
+        	categories: ["Democrat/DFL", "Republican"],
+        	tick: {
+        	  format: function(d) {
+        	    if (d == 1) {
+            		return "Republican";
+            	}
+            	else {
+            		return "Democrat/DFL";
+            	}
+              }
+            }
+        }
+	},
+    tooltip: {
+        format: {
+            title: function (d) { 
+            	if (d == 1) {
+            		return "Republican";
+            	}
+            	else {
+            		return "Democrat/DFL";
+            	}
+            },
+            value: function (value, ratio, id) {
+                var format = id === 'Republican' ? d3.format(',') : d3.format('$');
+                return format(value);
+            },
+            value: d3.format('$,') // apply this format to both y and y2
+        }
+    }
+});
+
+d3.select("#chart svg").append("text")
+	.attr('x', d3.select('#chart svg').node().getBoundingClientRect().width / 2)        
+	.attr("y", 18)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .style("font-family", "Oswald")
+    .text("Campaign contributions from U faculty members");
+d3.select("#chart svg").append("text")
+	.attr('x', d3.select('#chart svg').node().getBoundingClientRect().width / 2)    
+	.attr("y", 28)
+    .style("text-anchor", "middle")
+    .style("font-size", "x-small")
+    .text("Source: FEC");
+</script>
+</html>
