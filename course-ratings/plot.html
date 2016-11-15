@@ -32,6 +32,21 @@
         margin: 0 auto;  
     }
 
+      .svg-container {
+      display: inline-block;
+      position: relative;
+      width: 100%;
+      padding-bottom: 50%; /* aspect ratio */
+      vertical-align: top;
+      overflow: hidden;
+  }
+  .svg-content-responsive {
+      display: inline-block;
+      position: absolute;
+      top: 10px;
+      left: 0;
+  }
+
     #selector {
       text-align: center;
       margin: 0 auto;
@@ -498,12 +513,22 @@
         width = 720 - margin.left - margin.right,
         height = 380 - margin.top - margin.bottom;
 
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .attr("class", "graph")
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");   
+    // var svg = d3.select("body").append("svg")
+    //     // .attr("width", width + margin.left + margin.right)
+    //     // .attr("height", height + margin.top + margin.bottom)
+    //     .attr("class", "graph")
+    //   .append("g")
+    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
+
+var svg = d3.select("#chart")
+   .append("div")
+   .classed("svg-container", true) //container class to make it responsive
+   .append("svg")
+   //responsive SVG needs these 2 attributes and no width and height attr
+   .attr("preserveAspectRatio", "xMinYMin meet")
+   .attr("viewBox", "-50 -20 800 400")
+   //class to make it responsive
+   .classed("svg-content-responsive", true); 
 
     d3.tsv("https://raw.githubusercontent.com/mndaily/mndaily.github.io/master/course-ratings/static/ratings.csv", function(error, data) {
       if (error) throw error;
@@ -650,6 +675,38 @@
     }
 
     var rowData = [];
+
+    // function resize() {
+    //   var width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
+    //   height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+
+    //   // Update the range of the scale with new width/height
+    //   xScale.range([0, width]);
+    //   yScale.range([height, 0]);
+
+    //   // Update the axis and text with the new scale
+    //   svg.select('.xaxis')
+    //     .attr("transform", "translate(0," + height + ")")
+    //     .call(xAxis);
+
+    //   svg.select('.yaxis')
+    //     .call(yAxis);
+
+    //   // Force D3 to recalculate and update the line
+    //   svg.selectAll('.dot')
+    //       .attr("cx", function(d) { return x(d.recommend); })
+
+    //   // Update the tick marks
+    //   xAxis.ticks(Math.max(width/75, 2));
+    //   yAxis.ticks(Math.max(height/50, 2));
+
+    // };
+
+    // // Call the resize function whenever a resize event occurs
+    // d3.select(window).on('resize', resize);
+
+    // // Call the resize function
+    // resize();
 
   });
 </script>
