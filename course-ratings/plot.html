@@ -530,7 +530,7 @@ var svg = d3.select("#chart")
    //class to make it responsive
    .classed("svg-content-responsive", true); 
 
-    d3.tsv("https://raw.githubusercontent.com/mndaily/mndaily.github.io/master/course-ratings/static/ratings.csv", function(error, data) {
+    d3.csv("../static/ratings.csv", function(error, data) {
       if (error) throw error;
 
     var x = d3.scale.linear()
