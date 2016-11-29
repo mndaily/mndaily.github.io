@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <title>Freshman ethnicity</title>    
+	<style>
+    .c3-line {
+        stroke-width: 4px !important;
+    }
+    .c3-circle {
+        r: 6px !important;
+        stroke-width: 2px !important;
+    }
+    .c3 text {
+        font-family: "Lora", serif;
+    }
+	</style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px;"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+	data: {
+		xs: {
+            "Am. Indian": "cat1",
+            "Asian": "cat2",
+            "Black": "cat3",
+            "Hawaiian": "cat4",
+            "Hispanic": "cat5",
+            "International": "cat6",
+            "White": "cat7",
+            "Unknown": "cat8",
+        },
+		columns: [
+			// ["x","","2013","2014","2015"],
+            ["cat1", "2013", "2014", "2015", "2016"],
+			["Am. Indian",-0.066666667,0.267857143,-0.154929578,0.233333333],
+            ["cat2", "2013", "2014", "2015", "2016"],            
+			['Asian',-0.053846154,0.061788618,0.024502297,0.101644245],
+            ["cat3", "2013", "2014", "2015", "2016"],
+			['Black',0.14893617,0.069444444,0.095238095,0.015810277],
+            ["cat4", "2013", "2014", "2015", "2016"],
+			['Hawaiian',0,-0.458333333,0.769230769,0.217391304],
+            ["cat5", "2013", "2014", "2015", "2016"],
+			['Hispanic',0.064516129,0.036363636,0.14619883,0.091836735],
+            ["cat6", "2013", "2014", "2015", "2016"],
+			['International',-0.007017544,0.190812721,-0.074183976,0.096153846],
+            ["cat7", "2013", "2014", "2015", "2016"],
+			['White',0.01089061,-0.033995691,0.048327138,-0.011820331],
+            ["cat8", "2013", "2014", "2015", "2016"],
+			['Unknown',-0.6,1.375,0.473684211,0.714285714]
+		]
+	},
+	color: {
+		pattern: ["#b2182b","#d6604d","#f4a582","#fddbc7","#d1e5f0","#92c5de","#4393c3","#2166ac"]
+	},
+    axis: {
+        x: {
+            type: 'category'
+        },
+        y: {
+        	tick: {
+        		format: d3.format("%")
+        	}
+        }
+    },
+    tooltip: {
+    	grouped: false,
+        value: function (value, ratio, id) {
+            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+            return format(value);
+        }
+    }
+});
+
+d3.select("#chart svg").append("text")
+    .attr('x', window.innerWidth / 2)        
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Percent Change in Freshman Class's Ethnicity");
+d3.select("#chart svg").append("text")
+    .attr('x', window.innerWidth / 2)        
+    .attr("y", 39)
+    .style("text-anchor", "middle")
+    .style("font-size", "small")
+    .text("Source: Office of Institutional Research");     
+</script>
+</body>
+</html>
