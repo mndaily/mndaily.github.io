@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<div id="chart" style="height:410px; margin-right=20px"></div>
+<div id="chart" style="height:410px; margin-right:20px"></div>
 </body>
 <script>
 
@@ -77,14 +77,14 @@ var chart = c3.generate({
 });
 
 d3.select("#chart svg").append("text")
-    .attr('x', 600)        
+    .attr('x', window.innerWidth / 2)        
     .attr("y", 25)
     .style("text-anchor", "middle")
     .style("font-size", "large")
     .text("Percent Change in Freshman Class's Home Location");
 
 d3.select("#chart svg").append("text")
-    .attr('x', 600)        
+    .attr('x', window.innerWidth / 2)        
     .attr("y", 39)
     .style("text-anchor", "middle")
     .style("font-size", "small")
