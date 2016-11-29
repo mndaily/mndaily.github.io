@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<head>
+    <style>
+    .c3-line {
+        stroke-width: 4px !important;
+    }
+    .c3-circle {
+        r: 6px !important;
+        stroke-width: 2px !important;
+    }
+    .c3 text {
+        font-family: "Lora", serif;
+    }
+    </style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="chart" style="height:410px;"></div>
+</body>
+<script>
+
+var chart = c3.generate({
+    data: {
+        xs: {
+           "TC Metro": "cat1",
+           "Greater MN": "cat2",
+           "Wisconsin": "cat3",
+           "North Dakota": "cat4",
+           "South Dakota": "cat5",
+           "Foreign": "cat6",
+           "Other US": "cat7",
+        },
+        columns: [
+            ["cat1", "2013", "2014", "2015", "2016"],        
+            ["TC Metro",0.018568665,0.014812002,0.013473054,0.045051699],
+            ["cat2", "2013", "2014", "2015", "2016"],        
+            ["Greater MN",0.106696935,-0.110769231,0.085351788,0.035069075],
+            ["cat3", "2013", "2014", "2015", "2016"],        
+            ["Wisconsin",-0.159955257,-0.001331558,0.097333333,-0.069258809],
+            ["cat4", "2013", "2014", "2015", "2016"],        
+            ["North Dakota",-0.064516129,0.206896552,-0.057142857,-0.166666667],
+            ["cat5", "2013", "2014", "2015", "2016"],        
+            ["South Dakota",0,-0.050632911,0.133333333,-0.070588235],
+            ["cat6", "2013", "2014", "2015", "2016"],        
+            ["Foreign",-0.010452962,0.190140845,-0.047337278,0.114906832],
+            ["cat7", "2013", "2014", "2015", "2016"],        
+            ["Other US",0.053748232,-0.002684564,0.111709287,-0.010895884]
+        ]
+    },
+    color: {
+        pattern: ["#b2182b","#d6604d","#f4a582","#fddbc7","#d1e5f0","#92c5de","#4393c3","#2166ac"]
+    },
+    axis: {
+        x: {
+            tick: {
+                values: ["2012-2013", "2013-2014", "2014-2015", "2015-2016"]
+            }
+        },
+        y: {
+            tick: {
+                format: d3.format("%")
+            }
+        }
+    },
+    tooltip: {
+        grouped: false,
+        value: function (value, ratio, id) {
+            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+            return format(value);
+        }
+    }
+});
+
+d3.select("#chart svg").append("text")
+    .attr('x', 600)        
+    .attr("y", 25)
+    .style("text-anchor", "middle")
+    .style("font-size", "large")
+    .text("Percent Change in Freshman Class's Home Location");
+
+d3.select("#chart svg").append("text")
+    .attr('x', 600)        
+    .attr("y", 39)
+    .style("text-anchor", "middle")
+    .style("font-size", "small")
+    .text("Source: Office of Institutional Research");    
+</script>
+</body>
+</html>
